@@ -28,7 +28,7 @@ while (
 	exit (0);
     }
 
-    seek (INF, $size - 4, 1)
+    seek (INF, $size - 8, 1)
 };
 die "\n Problem readling: $!\n" if $!;
 
