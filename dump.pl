@@ -52,14 +52,14 @@ while ($counter > 0) {
             print $stype. "(" . $size . ")\n";
             my ($brand, $sminor, $minor);
             read( INF, $brand, 4);
-            print "brand(" . $brand . ")\n";
+            print "\t", "brand(" . $brand . ")\n";
             read( INF, $sminor, 4);
             $minor = unpack("N", $sminor);
-            print "minor(" . $minor . ")\n";
+            print "\t", "minor(" . $minor . ")\n";
             $root_session_size -= 8;
             while ($root_session_size > 0) {
                 read( INF, $brand, 4);
-                print "brand(" . $brand. ")\n";
+                print "\t", "brand(" . $brand. ")\n";
                 $root_session_size -= 4;
             }
             if ($root_session_size != 0) {
@@ -235,7 +235,7 @@ while ($counter > 0) {
                                     read INF, $sflag, 3 or die "failed to read flag!\n";
                                     $version = unpack("C", $sversion);
                                     $flag = unpack("B[24]", $sflag);
-                                    print "\t\t" . "version: " . $version, "||", $flag . "\n";
+                                    print "\t\t\t" . "version: " . $version, "||", $flag . "\n";
                                     $trak_session_size -= 4;
                                     my ($creation_time, $modification_time, $track_id, $reserved, $duration);
                                     my ($screation_time, $smodification_time, $strack_id, $sreserved, $sduration);
