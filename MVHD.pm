@@ -2,17 +2,22 @@
 package MVHD;
 use warnings;
 use strict;
+
 use Switch;
 use FullBox;
 
 sub new ()
 {
-    my ($INF, $_SIZE, $counter);
+    my ($INF, $_SIZE, $counter, $_INDENT_);
+
+    print "I prefer 4 parameter, but I only got $#_\n" if $#_ != 4;
     $INF = $_[1];
-    $_SIZE = $_[3];
     $counter = $_[2];
+    $_SIZE = $_[3];
+    $_INDENT_ = $_[4];
+    
     my $fh = FullBox->new($INF);
-    print "version: ", $fh->get_version(), "flag: ", $fh->get_flag(), " \n";
+    print $_INDENT_, "version: ", $fh->get_version(), "flag: ", $fh->get_flag(), " \n";
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();
@@ -54,10 +59,10 @@ sub new ()
     #
     #
     my  $epoch_diff = -2082844800;
-    print "\t\t" . "Creation Time: ". gmtime($creation_time + $epoch_diff) . "\n";
-    print "\t\t" . "Modification Time: ". gmtime($modification_time + $epoch_diff) . "\n";
-    print "\t\t" . "Time scale: ". $timescale . "\n";
-    print "\t\t" . "Time duration: ". $timeduration . " ( ". $timeduration/$timescale . ")\n";
+    print $_INDENT_, "Creation Time: ". gmtime($creation_time + $epoch_diff) . "\n";
+    print $_INDENT_, "Modification Time: ". gmtime($modification_time + $epoch_diff) . "\n";
+    print $_INDENT_, "Time scale: ". $timescale . "\n";
+    print $_INDENT_, "Time duration: ". $timeduration . " ( ". $timeduration/$timescale . ")\n";
     # rate, volume, maxtrix, predefined, etc.
     
     my ($srate, $svolume, $sreserved, $sreserved2, $smatrix, $spre_defined, $snext_track_id);
@@ -80,24 +85,20 @@ sub new ()
     $next_track_id = unpack("N", $snext_track_id);
     
     
-    printf "\t\t". "rate: 0x%x \n", $rate;
-    print "\t\t". "volume: ". $volume . "\n";
-    print "\t\t". "reserved: ". $reserved . "\n";
-    print "\t\t". "reserved2: ". "@reserved2" . "\n";
-    printf "\t\t". "matrix: %x \t%x \t%x\n", $matrix[0], $matrix[1],  $matrix[2];
-    printf "\t\t". "matrix: %x \t%x \t%x\n", $matrix[3], $matrix[4],  $matrix[5];
-    printf "\t\t". "matrix: %x \t%x \t%x\n", $matrix[6], $matrix[7],  $matrix[8];
-    print "\t\t". "pre_defined: ". "@pre_defined" . "\n";
-    print "\t\t". "next_track_id: ". $next_track_id . "\n";
+    printf $_INDENT_ . "rate: 0x%x \n", $rate;
+    print  $_INDENT_ . "volume: ". $volume . "\n";
+    print  $_INDENT_ . "reserved: ". $reserved . "\n";
+    print  $_INDENT_ .  "reserved2: ". "@reserved2" . "\n";
+    printf $_INDENT_ . "matrix: %x \t%x \t%x\n", $matrix[0], $matrix[1],  $matrix[2];
+    printf $_INDENT_ . "matrix: %x \t%x \t%x\n", $matrix[3], $matrix[4],  $matrix[5];
+    printf $_INDENT_ . "matrix: %x \t%x \t%x\n", $matrix[6], $matrix[7],  $matrix[8];
+    print  $_INDENT_ . "pre_defined: ". "@pre_defined" . "\n";
+    print  $_INDENT_ . "next_track_id: ". $next_track_id . "\n";
 
     $_SIZE -= 80;
     
-    if ($_SIZE != 0) {
-        print "I still need to seek $_SIZE to find next token\n";
-                         
-        seek($INF, $_SIZE, 1);
-
-    }
+    die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;
+        
 }
 
 1;

@@ -21,7 +21,7 @@ sub new()
     my ($header_size);
     $position = tell $INF;
 
-    print "position: ", $position, "\n";
+#    print "position: ", $position, "\n";
 
     read $INF, $ssize, 4 or die "read size failed. $!\n";
     read $INF, $stype, 4 or die "read type failed. $!\n";

@@ -6,12 +6,15 @@ use Switch;
 
 sub new ()
 {
-    my ($INF, $_SIZE, $counter);
+    my ($INF, $_SIZE, $counter, $_INDENT_);
     $INF = $_[1];
-    $_SIZE = $_[3];
     $counter = $_[2];
+    $_SIZE = $_[3];
+    $_INDENT_ = $_[4];
+    my $DELIMITER = "\t";
+    
     my $fh = FullBox->new($INF);
-    print "version: ", $fh->get_version(), "flag: ", $fh->get_flag(), " \n";
+    print $_INDENT_, "version: ", $fh->get_version(), "flag: ", $fh->get_flag(), " \n";
     $_SIZE -= 4; #subtract the fullheader extension size
     my ($version, $flag);
     $version = $fh->get_version();
@@ -57,11 +60,11 @@ sub new ()
     #
     #
     my  $epoch_diff = -2082844800;
-    print "\t\t\t" . "Creation Time: ". gmtime($creation_time + $epoch_diff) . "\n";
-    print "\t\t\t" . "Modification Time: ". gmtime($modification_time + $epoch_diff) . "\n";
-    print "\t\t\t" . "Track id: ". $track_id . "\n";
-    print "\t\t\t" . "Reserved: ". $reserved . "\n";
-    print "\t\t\t" . "Duration: ". $duration . "\n";
+    print $_INDENT_, "Creation Time: ". gmtime($creation_time + $epoch_diff) . "\n";
+    print $_INDENT_, "Modification Time: ". gmtime($modification_time + $epoch_diff) . "\n";
+    print $_INDENT_, "Track id: ". $track_id . "\n";
+    print $_INDENT_, "Reserved: ". $reserved . "\n";
+    print $_INDENT_, "Duration: ". $duration . "\n";
     
     # rate, volume, maxtrix, predefined, etc.
     
@@ -88,22 +91,19 @@ sub new ()
     $height = unpack("N", $sheight);
     
     
-    print "\t\t\t". "reserved2: ". "@reserved2" . "\n";
-    print "\t\t\t". "layer: ". $layer . "\n";
-    print "\t\t\t". "alternate_group: ". $alternate_group . "\n";
-    print "\t\t\t". "volume: ". $volume . "\n";
-    printf "\t\t\t". "matrix: %x \t%x \t%x\n", $matrix[0], $matrix[1],  $matrix[2];
-    printf "\t\t\t". "matrix: %x \t%x \t%x\n", $matrix[3], $matrix[4],  $matrix[5];
-    printf "\t\t\t". "matrix: %x \t%x \t%x\n", $matrix[6], $matrix[7],  $matrix[8];
-    print "\t\t\t". "width: ". $width . "\n";
-    print "\t\t\t". "height: ". $height . "\n";
+    print $_INDENT_, "reserved2: ". "@reserved2" . "\n";
+    print $_INDENT_, "layer: ". $layer . "\n";
+    print $_INDENT_, "alternate_group: ". $alternate_group . "\n";
+    print $_INDENT_, "volume: ". $volume . "\n";
+    printf $_INDENT_ . "matrix: %x \t%x \t%x\n", $matrix[0], $matrix[1],  $matrix[2];
+    printf $_INDENT_ . "matrix: %x \t%x \t%x\n", $matrix[3], $matrix[4],  $matrix[5];
+    printf $_INDENT_ . "matrix: %x \t%x \t%x\n", $matrix[6], $matrix[7],  $matrix[8];
+    print $_INDENT_,  "width: ". $width . "\n";
+    print $_INDENT_,  "height: ". $height . "\n";
     
     $_SIZE -= 60;
     
-    if ($_SIZE != 0) {
-        print "I still need to seek $_SIZE to find next token\n";
-        seek($INF, $_SIZE, 1);
-    }
+    die "size is not zero.\n" if $_SIZE;
 }
 
 1;

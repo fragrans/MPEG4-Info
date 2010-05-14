@@ -22,115 +22,119 @@ use SUBS;
 
 sub new ()
 {
-    my ($INF, $_SIZE, $counter);
+    my ($INF, $_SIZE, $counter, $_INDENT_);
     $INF = $_[1];
-    $_SIZE = $_[3];
     $counter = $_[2];
+    $_SIZE = $_[3];
+    $_INDENT_ = $_[4];
+
+    my $DELIMITER = "\t";
+    
      while ($_SIZE > 0) {
         my ($header) = Box->new($INF, $counter);
-        print "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
+        print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
         $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
         switch($header->get_type()) {
             case "stsd" {
-                print "++++ STSD ++++\n";
-                STSD->new($INF, $counter, $header->get_body_size());    
-                print "---- STSD ----\n";
+                print $_INDENT_, "++++ STSD ++++\n";
+                STSD->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STSD ----\n";
             }
             case "stts" {
-                print "++++ STTS ++++\n";
-                STTS->new($INF, $counter, $header->get_body_size());    
-                print "---- STTS ----\n";
+                print $_INDENT_, "++++ STTS ++++\n";
+                STTS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STTS ----\n";
             }
             case "ctts" {
-                print "++++ CTTS ++++\n";
-                CTTS->new($INF, $counter, $header->get_body_size());    
-                print "---- CTTS ----\n";
+                print $_INDENT_, "++++ CTTS ++++\n";
+                CTTS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- CTTS ----\n";
             }
             case "stsc" {
-                print "++++ STSC ++++\n";
-                STSC->new($INF, $counter, $header->get_body_size());    
-                print "---- STSC ----\n";
+                print $_INDENT_, "++++ STSC ++++\n";
+                STSC->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STSC ----\n";
             }
             case "stsz" {
-                print "++++ STSZ ++++\n";
-                STSZ->new($INF, $counter, $header->get_body_size());    
-                print "---- STSZ ----\n";
+                print $_INDENT_, "++++ STSZ ++++\n";
+                STSZ->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STSZ ----\n";
             }
             case "stz2" {
-                print "++++ STZ2 ++++\n";
-                STZ2->new($INF, $counter, $header->get_body_size());    
-                print "---- STZ2 ----\n";
+                print $_INDENT_, "++++ STZ2 ++++\n";
+                STZ2->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STZ2 ----\n";
             }
             case "stco" {
-                print "++++ STCO ++++\n";
-                STCO->new($INF, $counter, $header->get_body_size());    
-                print "---- STCO ----\n";
+                print $_INDENT_, "++++ STCO ++++\n";
+                STCO->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STCO ----\n";
             }
             case "co64" {
-                print "++++ CO64 ++++\n";
-                CO64->new($INF, $counter, $header->get_body_size());    
-                print "---- CO64 ----\n";
+                print $_INDENT_, "++++ CO64 ++++\n";
+                CO64->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- CO64 ----\n";
             }
             case "stss" {
-                print "++++ STSS ++++\n";
-                STSS->new($INF, $counter, $header->get_body_size());    
-                print "---- STSS ----\n";
+                print $_INDENT_, "++++ STSS ++++\n";
+                STSS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STSS ----\n";
             }
             case "stsh" {
-                print "++++ STSH ++++\n";
-                STSH->new($INF, $counter, $header->get_body_size());    
-                print "---- STSH ----\n";
+                print $_INDENT_, "++++ STSH ++++\n";
+                STSH->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STSH ----\n";
             }
             case "padb" {
-                print "++++ PADB ++++\n";
-                PADB->new($INF, $counter, $header->get_body_size());    
-                print "---- PADB ----\n";
+                print $_INDENT_, "++++ PADB ++++\n";
+                PADB->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- PADB ----\n";
             }
             case "stdp" {
-                print "++++ STDP ++++\n";
-                STDP->new($INF, $counter, $header->get_body_size());    
-                print "---- STDP ----\n";
+                print $_INDENT_, "++++ STDP ++++\n";
+                STDP->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STDP ----\n";
             }
             case "sdtp" {
-                print "++++ SDTP ++++\n";
-                SDTP->new($INF, $counter, $header->get_body_size());    
-                print "---- SDTP ----\n";
+                print $_INDENT_, "++++ SDTP ++++\n";
+                SDTP->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- SDTP ----\n";
             }
             case "sbgp" {
-                print "++++ SBGP ++++\n";
-                SBGP->new($INF, $counter, $header->get_body_size());    
-                print "---- SBGP ----\n";
+                print $_INDENT_, "++++ SBGP ++++\n";
+                SBGP->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- SBGP ----\n";
             }
             case "sgpd" {
-                print "++++ SGPD ++++\n";
-                SGPD->new($INF, $counter, $header->get_body_size());    
-                print "---- SGPD ----\n";
+                print $_INDENT_, "++++ SGPD ++++\n";
+                SGPD->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- SGPD ----\n";
             }
             case "subs" {
-                print "++++ SUBS ++++\n";
-                SUBS->new($INF, $counter, $header->get_body_size());    
-                print "---- SUBS ----\n";
+                print $_INDENT_, "++++ SUBS ++++\n";
+                SUBS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- SUBS ----\n";
             }
             case "STZ2" {
-                print "++++ STZ2 ++++\n";
-                STZ2->new($INF, $counter, $header->get_body_size());    
-                print "---- STZ2 ----\n";
+                print $_INDENT_, "++++ STZ2 ++++\n";
+                STZ2->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STZ2 ----\n";
             }
             case "STZ2" {
-                print "++++ STZ2 ++++\n";
-                STZ2->new($INF, $counter, $header->get_body_size());    
-                print "---- STZ2 ----\n";
+                print $_INDENT_, "++++ STZ2 ++++\n";
+                STZ2->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STZ2 ----\n";
             }
             case "STZ2" {
-                print "++++ STZ2 ++++\n";
-                STZ2->new($INF, $counter, $header->get_body_size());    
-                print "---- STZ2 ----\n";
+                print $_INDENT_, "++++ STZ2 ++++\n";
+                STZ2->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- STZ2 ----\n";
             }
             else {
-                print "++++ NULL ++++\n";
-                NULL->new($INF, $counter, $header->get_body_size());    
-                print "---- NULL ----\n";
+                print $_INDENT_, "++++ NULL ++++\n";
+                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- NULL ----\n";
             }
         }
     }
