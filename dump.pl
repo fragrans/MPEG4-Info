@@ -2,30 +2,32 @@
 use warnings;
 use File::stat;
 use Switch;
-use Box;
-use FullBox;
 use Container;
-
 $|++;
+
 print "MPEG4 information extractor by Li. Tuvok\n";
 my $file = "640-480.wmv.MP4";
-open INF, $file
+
+my $INF;
+
+open $INF, $file
     or die "\nCan't open $file for reading: $!\n";
-binmode INF;
+
+binmode $INF;
+
 my $ssize;
 my $stype;
 my $size;
 my $counter;
 my $header_size;
+
 $counter = stat($file)->size;
 print "file size: ".$counter;
 print "\n";
-while ($counter > 0) {
-};
 
-die "\n Problem readling: $!\n" if $!;
+Container->new(*$INF{IO}, $counter, $counter);
 
-close INF
+close $INF
     or die "\nCan't close $file: $!\n";
 
 
