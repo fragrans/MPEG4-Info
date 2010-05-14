@@ -8,6 +8,10 @@ $|++;
 print "MPEG4 information extractor by Li. Tuvok\n";
 my $file = "640-480.wmv.MP4";
 
+if (($#ARGV+1) == 1) {
+    $file = $ARGV[0];
+}
+print "file name : $file\n";
 my $INF;
 
 open $INF, $file
@@ -25,7 +29,7 @@ $counter = stat($file)->size;
 print "file size: ".$counter;
 print "\n";
 
-Container->new(*$INF{IO}, $counter, $counter);
+Container->new(*$INF{IO}, $counter, $counter, "");
 
 close $INF
     or die "\nCan't close $file: $!\n";
