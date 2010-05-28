@@ -23,59 +23,59 @@ sub new ()
 
     while ($_SIZE > 0) {
         my ($header) = Box->new($INF, $counter);
-        print "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
+        print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
         $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
         switch($header->get_type()) {
             case "hdlr" {
-                print "++++ HDLR ++++\n";
-                HDLR->new($INF, $counter, $header->get_body_size());    
-                print "---- HDLR ----\n";
+                print $_INDENT_, "++++ HDLR ++++\n";
+                HDLR->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- HDLR ----\n";
             }
             case "dinf" {
-                print "++++ DINF ++++\n";
-                DINF->new($INF, $counter, $header->get_body_size());    
-                print "---- DINF ----\n";
+                print $_INDENT_, "++++ DINF ++++\n";
+                DINF->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- DINF ----\n";
             }
             case "ipmc" {
-                print "++++ IPMC ++++\n";
-                IPMC->new($INF, $counter, $header->get_body_size());    
-                print "---- IPMC ----\n";
+                print $_INDENT_, "++++ IPMC ++++\n";
+                IPMC->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- IPMC ----\n";
             }
             case "iloc" {
-                print "++++ ILOC ++++\n";
-                ILOC->new($INF, $counter, $header->get_body_size());    
-                print "---- ILOC ----\n";
+                print $_INDENT_, "++++ ILOC ++++\n";
+                ILOC->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- ILOC ----\n";
             }
             case "ipro" {
-                print "++++ IPRO ++++\n";
-                IPRO->new($INF, $counter, $header->get_body_size());    
-                print "---- IPRO ----\n";
+                print $_INDENT_, "++++ IPRO ++++\n";
+                IPRO->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- IPRO ----\n";
             }
             case "iinf" {
-                print "++++ IINF ++++\n";
-                IINF->new($INF, $counter, $header->get_body_size());    
-                print "---- IINF ----\n";
+                print $_INDENT_, "++++ IINF ++++\n";
+                IINF->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- IINF ----\n";
             }
             case "xml " {
-                print "++++ XML  ++++\n";
-                XML->new($INF, $counter, $header->get_body_size());    
-                print "---- XML  ----\n";
+                print $_INDENT_, "++++ XML  ++++\n";
+                XML->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- XML  ----\n";
             }
             case "bxml" {
-                print "++++ BXML ++++\n";
-                BXML->new($INF, $counter, $header->get_body_size());    
-                print "---- BXML ----\n";
+                print $_INDENT_, "++++ BXML ++++\n";
+                BXML->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- BXML ----\n";
             }
             case "pitm" {
-                print "++++ PITM ++++\n";
-                PITM->new($INF, $counter, $header->get_body_size());    
-                print "---- PITM ----\n";
+                print $_INDENT_, "++++ PITM ++++\n";
+                PITM->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- PITM ----\n";
             }
             else {
-                print "++++ NULL ++++\n";
-                NULL->new($INF, $counter, $header->get_body_size());    
-                print "---- NULL ----\n";
+                print $_INDENT_, "++++ NULL ++++\n";
+                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- NULL ----\n";
             }
         }
     }
