@@ -6,6 +6,9 @@ use strict;
 use Switch;
 use FullBox;
 
+#
+# Movie header, overall declarations
+#
 sub new ()
 {
     my ($INF, $_SIZE, $counter, $_INDENT_);

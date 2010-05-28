@@ -1,8 +1,10 @@
 #!/usr/bin/perl -w
 use warnings;
+use strict;
 use File::stat;
 use Switch;
 use Container;
+
 $|++;
 
 print "MPEG4 information extractor by Li. Tuvok\n";
@@ -33,6 +35,3 @@ Container->new(*$INF{IO}, $counter, $counter, "");
 
 close $INF
     or die "\nCan't close $file: $!\n";
-
-
-

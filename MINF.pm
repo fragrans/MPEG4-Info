@@ -10,6 +10,9 @@ use NMHD;
 use DINF;
 use STBL;
 
+#
+# Media information container
+#
 sub new ()
 {
     my ($INF, $_SIZE, $counter, $_INDENT_);

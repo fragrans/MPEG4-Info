@@ -2,14 +2,19 @@
 package MOOV;
 use warnings;
 use strict;
+
 use Switch;
-use Box;
+
 use MVHD;
 use TRAK;
 use MVEX;
 use IPMC;
 use IODS;
 use UDTA;
+
+#
+# Container for all the metadata
+#
 
 sub new ()
 {
@@ -18,6 +23,7 @@ sub new ()
     $counter = $_[2];
     $_SIZE = $_[3];
     $_INDENT_ = $_[4];
+    
     my ($DELIMITER);
     $DELIMITER = "\t";
     print $_INDENT_, "I prefer 4 parameters, but I only have $#_\n" if $#_ != 4;
@@ -64,7 +70,6 @@ sub new ()
         }
         
     }
-    seek($INF, $_SIZE, 1);
+    die "size is not zero \n" if $_SIZE;
 }
-
 1;

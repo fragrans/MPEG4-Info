@@ -5,6 +5,13 @@ use strict;
 
 use Switch;
 
+#
+# File type and compatibility
+#
+
+#
+# It is done.
+#
 sub new ()
 {
     my ($INF, $counter, $_SIZE, $_INDENT_);
