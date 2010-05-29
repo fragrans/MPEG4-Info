@@ -1,4 +1,7 @@
+#!/usr/bin/perl -w
 package FullBox;
+use strict;
+use warnings;
 
 sub new()
 {
@@ -25,5 +28,8 @@ sub get_version() {
 sub get_flag() {
     return ($_[0]->{'flag'});
 }
-
+sub print() {
+    die "Please do give indent.\n" if $#_ != 1;
+    print $_[1], "version: ", $_[0]->get_version(), "flag: ", $_[0]->get_flag(), " \n";
+}
 1;

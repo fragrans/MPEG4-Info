@@ -66,7 +66,7 @@ sub new ()
             }
         }
     }
-    die "size is not null. \n" if $_SIZE;
+    die "MINF size is not null. \n" if $_SIZE;
 }
 
 1;

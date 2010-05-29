@@ -2,6 +2,7 @@
 package STBL;
 use strict;
 use warnings;
+
 use Switch;
 use STSD;
 use STTS;
@@ -20,6 +21,14 @@ use SBGP;
 use SGPD;
 use SUBS;
 
+#
+# The sample table contains all the time and data indexing 
+# of the media samples in a track. 
+# Using the tables here, it is possible to locate samples 
+# in time, determine their type (e.g. I-frame or not), 
+# and determine their size, container, 
+# and offset into that container.
+#
 sub new ()
 {
     my ($INF, $_SIZE, $counter, $_INDENT_);
