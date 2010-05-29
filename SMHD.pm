@@ -33,7 +33,7 @@ sub new ()
     $reserved = unpack("n", $sreserved);
     print $_INDENT_, "balance: ", $balance, "\n";
     print $_INDENT_ ,"reserved: ", $reserved, "\n";
-    $_SIZE -= 8;
+    $_SIZE -= 4;
     die $_INDENT_ . "SMHD size is not zero.\n" if $_SIZE;
 }
 
