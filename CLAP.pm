@@ -16,8 +16,8 @@ sub new()
     $_SIZE = $_[3];
     $_INDENT_ = $_[4];
 
-    my ($scleanApertureWidthN, $scleanApertureWidthD, $scleanApertureHeightN, $scleanApertureHeightD, $shorizOffN, $shorizOffD, $svertOffN, $svertOffN);
-    my ($cleanApertureWidthN, $cleanApertureWidthD, $cleanApertureHeightN, $cleanApertureHeightD, $horizOffN, $horizOffD, $vertOffN, $vertOffN);
+    my ($scleanApertureWidthN, $scleanApertureWidthD, $scleanApertureHeightN, $scleanApertureHeightD, $shorizOffN, $shorizOffD, $svertOffN, $svertOffD);
+    my ($cleanApertureWidthN, $cleanApertureWidthD, $cleanApertureHeightN, $cleanApertureHeightD, $horizOffN, $horizOffD, $vertOffN, $vertOffD);
 
     read $INF, $scleanApertureWidthN, 4 or die "fail to read cleanApertureWidthN.\n";
     read $INF, $scleanApertureWidthD, 4 or die "fail to read cleanApertureWidthD.\n";

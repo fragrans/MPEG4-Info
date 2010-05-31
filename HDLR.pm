@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Switch;
 
+my $handler;
 #
 # handler, at this level, the media (handler) type
 #
@@ -21,7 +22,7 @@ sub new ()
     $version = $fh->get_version();
     $flag = $fh->get_flag();
     $_SIZE -= 4; #subtract the fullheader extension size
-
+    
     my ($pre_defined, $handler_type, @reserved, $name);
     my ($spre_defined, $shandler_type, $sreserved);
 
@@ -29,11 +30,12 @@ sub new ()
     read $INF, $shandler_type, 4 or die "read hanlder type failed.";
     read $INF, $sreserved, 12 or die "read reserved failed.";
     $_SIZE -= 20;
+    
     read $INF, $name, $_SIZE or die "read name failed.";
 
     $pre_defined = unpack("N", $spre_defined);
     $handler_type = $shandler_type;
-    @reserved = unpack("NNN", $sreserved);
+    @reserved = unpack("N" x 3, $sreserved);
     
     print $_INDENT_, "pre_defined: ", $pre_defined, "\n";
     print $_INDENT_, "handler type: ", $handler_type, "\n";

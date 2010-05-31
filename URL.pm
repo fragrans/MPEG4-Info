@@ -26,7 +26,7 @@ sub new ()
     $flag = $fh->get_flag();
     $_SIZE -= 4; #subtract the fullheader extension size
     return if $_SIZE == 0;
-    print "size is not zero yet.\n"
+    print "size is not zero yet.\n";
     my ($location);
     print $_INDENT_, "location size: $_SIZE\n";
     read $INF, $location, $_SIZE or die "failed to read location\n";

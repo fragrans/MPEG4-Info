@@ -15,6 +15,8 @@ use STBL;
 #
 sub new ()
 {
+    print "I prefer 4 parameter, but I only got $#_\n" if $#_ != 4;
+
     my ($INF, $_SIZE, $counter, $_INDENT_);
     $INF = $_[1];
     $counter = $_[2];

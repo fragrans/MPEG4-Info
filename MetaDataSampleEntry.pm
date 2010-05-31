@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use Switch;
 
+use SampleTable;
+
 #
 # meta data sample table
 #
@@ -17,10 +19,10 @@ sub new ()
     $_SIZE = $_[3];
     $_INDENT_ = $_[4];
     
-    my $st = ->new($INF);
+    my $st = SampleTable->new($INF);
     $st->print($_INDENT_);
 
-    my ($reserved, @data_reference_index);
+    my (@reserved, $data_reference_index);
     @reserved = $st->get_reserved();
     $data_reference_index = $st->get_data_reference_index();
     $_SIZE -= 8; #subtract the sampletable extension size
