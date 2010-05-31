@@ -11,7 +11,10 @@ use VisualSampleEntry;
 use AudioSampleEntry;
 use HintSampleEntry;
 use MetaDataSampleEntry;
-
+use MP4A;
+use MP4S;
+use MP4V;
+use AVC1;
 #
 # Sample Description Box
 #
@@ -48,6 +51,8 @@ sub new ()
         $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
         switch($header->get_type()) {
+
+           
             case "soun" {
                 print $_INDENT_, "++++ Audio Sample Entry ++++\n";
                 AudioSampleEntry->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
@@ -58,10 +63,28 @@ sub new ()
                 VisualSampleEntry->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
                 print $_INDENT_, "---- Visual Sample Entry ----\n";
             }
+           
             case "avc1" {
-                print $_INDENT_, "++++ Visual Sample Entry ++++\n";
-                VisualSampleEntry->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- Visual Sample Entry ----\n";
+                print $_INDENT_, "++++ AVC1 ++++\n";
+                AVC1->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- AVC1 ----\n";
+            }
+            
+            case "mp4a" {
+                print $_INDENT_, "++++ MP4A ++++\n";
+                MP4A->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- MP4A ----\n";
+            }
+            
+            case "mp4v" {
+                print $_INDENT_, "++++ MP4V ++++\n";
+                MP4V->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- MP4V ----\n";
+            }
+            case "mp4s" {
+                print $_INDENT_, "++++ MP4S ++++\n";
+                MP4S->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                print $_INDENT_, "---- MP4S ----\n";
             }
             case "hint" {
                 print $_INDENT_, "++++ Hint Sample Entry ++++\n";
@@ -73,12 +96,15 @@ sub new ()
                 MetadataSampleEntry->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
                 print $_INDENT_, "---- Metadata Sample Entry ----\n";
             }
+           
             else {
-                die "unknown type. at STSD.pm";
+                print $_INDENT_, "++++ NULL ++++\n";
+                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+                print $_INDENT_, "---- NULL ----\n";
             }
         }
     }
-    die "STSD size is not null. \n" if $_SIZE;
+    die "STSD size ($_SIZE) is not null. \n" if $_SIZE;
 }
 
 1;

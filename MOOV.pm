@@ -70,6 +70,6 @@ sub new ()
         }
         
     }
-    die "size is not zero \n" if $_SIZE;
+    die "size ($_SIZE)is not zero in MOOV\n" if $_SIZE;
 }
 1;

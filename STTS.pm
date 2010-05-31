@@ -30,15 +30,18 @@ sub new ()
     $_SIZE -= 4;
     my ($i);
     for ($i = 0; $i < $entry_count; $i++) {
-        local ($ssample_count, $ssample_delta);
-        local ($sample_count, $sample_delta);
+        my ($ssample_count, $ssample_delta);
+        my ($sample_count, $sample_delta);
         
         read $INF, $ssample_count, 4 or die "failed to read sample count.";
         read $INF, $ssample_delta, 4 or die "failed to read sample delta.";
         $sample_count = unpack("N", $ssample_count);
         $sample_delta = unpack("N", $ssample_delta);
-        print $
+        print $_INDENT_, "sample count: ", $sample_count, "\n";
+        print $_INDENT_, "sample delta: ", $sample_delta, "\n";
+        $_SIZE -= 8;
     }
+    die "size is not zero. \n" if $_SIZE;
 }
 
 1;

@@ -56,11 +56,13 @@ sub new ()
                 DINF->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
                 print $_INDENT_, "---- DINF ----\n";
             }
+           
             case "stbl" {
                 print $_INDENT_, "++++ STBL ++++\n";
                 STBL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
                 print $_INDENT_, "---- STBL ----\n";
             }
+            
             else {
                 print $_INDENT_, "++++ NULL ++++\n";
                 NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    

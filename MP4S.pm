@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-package HintSampleEntry;
+package MP4S;
 use strict;
 use warnings;
 use Switch;

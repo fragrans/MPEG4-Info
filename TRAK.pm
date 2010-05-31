@@ -24,11 +24,10 @@ sub new ()
         print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
         $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
-         switch($header->get_type()) {
+         switch($header->get_type()) {             
             case "tkhd" {
                 print $_INDENT_, "++++ TKHD ++++\n";
                 TKHD->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                
                 print $_INDENT_, "---- TKHD ----\n";
             }
             case "tref" {
@@ -47,11 +46,13 @@ sub new ()
                 print $_INDENT_, "---- MDIA ----\n";
             }
             else {
+                print $_INDENT_, "++++ NULL ++++\n";
                 NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+                print $_INDENT_, "---- NULL ----\n";
             }
          }
     }
-    die "size is not null!\n" if $_SIZE;
+    die "TRAK size ($_SIZE) is not null!\n" if $_SIZE;
 }
 
 1;

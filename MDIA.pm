@@ -23,6 +23,7 @@ sub new ()
         $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
         switch($header->get_type()) {
+           
             case "mdhd" {
                 print $_INDENT_, "++++ MDHD ++++\n";
                 MDHD->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
@@ -33,10 +34,14 @@ sub new ()
                 HDLR->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
                 print $_INDENT_, "---- HDLR ----\n";
             }
+            
             case "minf" {
                 print $_INDENT_, "++++ MINF ++++\n";
                 MINF->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
                 print $_INDENT_, "---- MINF ----\n";
+            }
+            
+            case "" {
             }
             else {
                 print $_INDENT_, "++++ NULL ++++\n";
@@ -46,7 +51,7 @@ sub new ()
         }
     }
     
-    die "size is not zero.\n" if $_SIZE;
+    die "size ($_SIZE) is not zero.\n" if $_SIZE;
 }
 
 1;

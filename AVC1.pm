@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-package VisualSampleEntry;
+package AVC1;
 use strict;
 use warnings;
 use Switch;
@@ -84,20 +84,13 @@ sub new ()
         print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
         $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
-        switch($header->get_type()) {
-        
-            case "clap" {
-                print $_INDENT_, "++++ CLAP ++++\n";
-                CLAP->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- CLAP ----\n";
+        switch($header->get_type()) {        
+            case "esds" {
+                print $_INDENT_, "++++ ESDS ++++\n";
+                ESDS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+                print $_INDENT_, "---- ESDS ----\n";
             }
-            case "pasp" {
-                print $_INDENT_, "++++ PASP ++++\n";
-                PASP->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- PASP ----\n";
-            }
-           
-            case "avcC" {
+             case "avcC" {
                 print $_INDENT_, "++++ AVCC ++++\n";
                 NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
                 print $_INDENT_, "---- AVCC ----\n";

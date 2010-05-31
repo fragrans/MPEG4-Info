@@ -45,11 +45,13 @@ sub new ()
         $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
         switch($header->get_type()) {
+            
             case "stsd" {
                 print $_INDENT_, "++++ STSD ++++\n";
                 STSD->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
                 print $_INDENT_, "---- STSD ----\n";
             }
+            
             case "stts" {
                 print $_INDENT_, "++++ STTS ++++\n";
                 STTS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
@@ -125,20 +127,10 @@ sub new ()
                 SUBS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
                 print $_INDENT_, "---- SUBS ----\n";
             }
-            case "STZ2" {
-                print $_INDENT_, "++++ STZ2 ++++\n";
-                STZ2->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- STZ2 ----\n";
-            }
-            case "STZ2" {
-                print $_INDENT_, "++++ STZ2 ++++\n";
-                STZ2->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- STZ2 ----\n";
-            }
-            case "STZ2" {
-                print $_INDENT_, "++++ STZ2 ++++\n";
-                STZ2->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- STZ2 ----\n";
+            case "trak" {
+                print $_INDENT_, "++++ TRAK ++++\n";
+                TRAK->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+                print $_INDENT_, "---- TRAK ----\n";
             }
             else {
                 print $_INDENT_, "++++ NULL ++++\n";

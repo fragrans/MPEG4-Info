@@ -98,7 +98,7 @@ sub new()
             }
         }
     }
-    die "size is not zero!\n" if $_SIZE;
+    die "size is not zero in Container!\n" if $_SIZE;
     bless $objref, $class;
     return $class;
 }

@@ -54,7 +54,9 @@ sub new ()
                 print $_INDENT_, "---- URN ----\n";
             }
             else {
-		die "I shouldn't go here. \n";
+		print $_INDENT_, "++++ NULL ++++\n";
+                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+                print $_INDENT_, "---- NULL ----\n";
             }
         }
     }
