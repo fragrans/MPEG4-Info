@@ -9,11 +9,10 @@ use Switch;
 
 sub new ()
 {
-    my ($INF, $counter, $_SIZE, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
 
     # full box header, version and flag
     my $fh = FullBox->new($INF);
@@ -35,6 +34,7 @@ sub new ()
         $_SIZE -= 8;
     }
     die "size is not zero\n" if $SIZE;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

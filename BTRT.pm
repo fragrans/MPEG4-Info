@@ -5,13 +5,13 @@ use warnings;
 
 sub new()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
-
-    print "I prefer 4 parameter, but I only got $#_\n" if $#_ != 4;
+    my ($INF, $_SIZE, $_INDENT_);
+    die "I prefer 3 parameter, but I only got $#_\n" if $#_ != 3;
+    
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
+
     
     my ($bufferSizeDB, $maxBitrate, $avgBitrate);
     my ($sbufferSizeDB, $smaxBitrate, $savgBitrate);
@@ -28,6 +28,7 @@ sub new()
     print $_INDENT_ . "maxBitrate: ". $maxBitrate . "\n";
     print $_INDENT_ . "avgBitrate: ". $avgBitrate . "\n";
 
-    die "BTRT size is not zero.\n" if $_SIZE;
+    die "BTRT size ($_SIZE) is not zero.\n" if $_SIZE;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 1;

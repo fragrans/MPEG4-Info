@@ -10,11 +10,10 @@ use Switch;
 
 sub new()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
 
     my ($scleanApertureWidthN, $scleanApertureWidthD, $scleanApertureHeightN, $scleanApertureHeightD, $shorizOffN, $shorizOffD, $svertOffN, $svertOffD);
     my ($cleanApertureWidthN, $cleanApertureWidthD, $cleanApertureHeightN, $cleanApertureHeightD, $horizOffN, $horizOffD, $vertOffN, $vertOffD);
@@ -47,6 +46,7 @@ sub new()
     print $_INDENT_, "vertOffD: ", $vertOffD, "\n";
 
     die "PASP size is not zero" if $_SIZE;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

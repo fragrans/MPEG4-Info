@@ -11,13 +11,12 @@ use Switch;
 #
 sub new ()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
 
-    print "I prefer 4 parameter, but I only got $#_\n" if $#_ != 4;
+    die "I prefer 3 parameter, but I only got $#_\n" if $#_ != 3;
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
     
     my $fh = FullBox->new($INF);
     $fh->print($_INDENT_);
@@ -46,6 +45,7 @@ sub new ()
     print $_INDENT_, "reserved: ", $reserved;
     $_SIZE -= (4*3 + 2*2);
     die "HDHD size is not zero.\n" if $_SIZE;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 

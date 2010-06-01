@@ -11,13 +11,12 @@ use FullBox;
 #
 sub new ()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
 
-    print "I prefer 4 parameter, but I only got $#_\n" if $#_ != 4;
+    die "I prefer 3 parameters, but I only got $#_\n" if $#_ != 3;
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
     
     my $fh = FullBox->new($INF);
     $fh->print($_INDENT_);
@@ -26,7 +25,7 @@ sub new ()
     $flag = $fh->get_flag();
     $_SIZE -= 4; #subtract the fullheader extension size
     return if $_SIZE == 0;
-    print "size is not zero yet.\n";
+    die "size is not zero yet.\n";
     my ($location);
     print $_INDENT_, "location size: $_SIZE\n";
     read $INF, $location, $_SIZE or die "failed to read location\n";
@@ -34,6 +33,7 @@ sub new ()
     $_SIZE -= $_SIZE;
     die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;
         
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

@@ -2,8 +2,8 @@
 package FTYP;
 use warnings;
 use strict;
-
 use Switch;
+use Def;
 
 #
 # File type and compatibility
@@ -14,11 +14,12 @@ use Switch;
 #
 sub new ()
 {
-    my ($INF, $counter, $_SIZE, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
+    
+    &Def::header($_INDENT_, __PACKAGE__);
     
     my ($brand, $sminor, $minor);
   
@@ -33,8 +34,8 @@ sub new ()
         $_SIZE -= read( $INF, $brand, 4);
         print $_INDENT_, "brand(" . $brand. ")\n";
     }
-
     die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

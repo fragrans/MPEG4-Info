@@ -6,12 +6,12 @@ use Switch;
 
 sub new ()
 {
-    my ($INF, $_SIZE, $counter);
+    my ($INF, $_SIZE);
     $INF = $_[1];
-    $_SIZE = $_[3];
-    $counter = $_[2];
+    $_SIZE = $_[2];
     
     seek($INF, $_SIZE, 1);
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

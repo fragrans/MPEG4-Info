@@ -20,14 +20,14 @@ use AVC1;
 #
 sub new ()
 {
-    print "I prefer 4 parameter, but I only got $#_\n" if $#_ != 4;
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    die "I prefer 3 parameters, but I only got $#_\n" if $#_ != 3;
+    my ($INF, $_SIZE, $_INDENT_);
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
 
-    my $DELIMITER = "\t";
+    &Def::header($_INDENT_, __PACKAGE__);
+    my $DELIMITER = $Def::DELIMITER;
 
     # full box
     my $fh = FullBox->new($INF);
@@ -46,65 +46,47 @@ sub new ()
     my ($i);
     
     for ($i=0; $i<$entry_count; $i++) {
-        my ($header) = Box->new($INF, $counter);
+        my ($header) = Box->new($INF);
         print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
-        $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
         switch($header->get_type()) {
 
            
             case "soun" {
-                print $_INDENT_, "++++ Audio Sample Entry ++++\n";
-                AudioSampleEntry->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- Audio Sample Entry ----\n";
+                AudioSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             case "vide" {
-                print $_INDENT_, "++++ Visual Sample Entry ++++\n";
-                VisualSampleEntry->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- Visual Sample Entry ----\n";
+                VisualSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
            
             case "avc1" {
-                print $_INDENT_, "++++ AVC1 ++++\n";
-                AVC1->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- AVC1 ----\n";
+                AVC1->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             
             case "mp4a" {
-                print $_INDENT_, "++++ MP4A ++++\n";
-                MP4A->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- MP4A ----\n";
+                MP4A->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             
             case "mp4v" {
-                print $_INDENT_, "++++ MP4V ++++\n";
-                MP4V->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- MP4V ----\n";
+                MP4V->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             case "mp4s" {
-                print $_INDENT_, "++++ MP4S ++++\n";
-                MP4S->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- MP4S ----\n";
+                MP4S->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             case "hint" {
-                print $_INDENT_, "++++ Hint Sample Entry ++++\n";
-                HintSampleEntry->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- Hint Sample Entry ----\n";
+                HintSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             case "meta" {
-                print $_INDENT_, "++++ Metadata Sample Entry ++++\n";
-                MetadataSampleEntry->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- Metadata Sample Entry ----\n";
+                MetadataSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
            
             else {
-                print $_INDENT_, "++++ NULL ++++\n";
-                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- NULL ----\n";
+                NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
         }
     }
     die "STSD size ($_SIZE) is not null. \n" if $_SIZE;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

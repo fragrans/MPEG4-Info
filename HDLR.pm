@@ -10,11 +10,10 @@ my $handler;
 #
 sub new ()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
     # full box header, version and flag
     my $fh = FullBox->new($INF);
     $fh->print($_INDENT_);
@@ -44,6 +43,7 @@ sub new ()
 
     die "size is not zero" if $_SIZE;
     
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

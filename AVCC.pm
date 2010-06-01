@@ -10,11 +10,10 @@ use Switch;
 
 sub new()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
 
     my ($hSpacing, $vSpacing);
     my ($shSpacing, $svSpacing);
@@ -27,6 +26,7 @@ sub new()
     print $_INDENT_, "vSpacing: ", $vSpacing, "\n";
 
     die "PASP size is not zero" if $_SIZE;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

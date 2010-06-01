@@ -15,15 +15,15 @@ use BTRT;
 #
 sub new ()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
 
-    print "I prefer 4 parameter, but I only got $#_\n" if $#_ != 4;
+    die "I prefer 3 parameter, but I only got $#_\n" if $#_ != 3;
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
 
-    my $DELIMITER = "\t";
+    &Def::header($_INDENT_, __PACKAGE__);
+    my $DELIMITER = $Def::DELIMITER;
     
     my $st = SampleTable->new($INF);
     $st->print($_INDENT_);
@@ -78,41 +78,33 @@ sub new ()
 
     while ($_SIZE > 0) {
         print $_INDENT_, "size: ", $_SIZE, "\n";
-        my ($header) = Box->new($INF, $counter);
-        print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
-        $counter -= $header->get_size();
+        my ($header) = Box->new($INF);
+        $header->print($_INDENT_);
         $_SIZE -= $header->get_size();
+        
         switch($header->get_type()) {        
             case "esds" {
-                print $_INDENT_, "++++ ESDS ++++\n";
-                ESDS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- ESDS ----\n";
+                ESDS->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
              case "avcC" {
-                print $_INDENT_, "++++ AVCC ++++\n";
-                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- AVCC ----\n";
+                NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             
             case "btrt" {
-                print $_INDENT_, "++++ BTRT ++++\n";
-                BTRT->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- BTRT ----\n";
+                BTRT->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+#                NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             
             case "stts" {
-                print $_INDENT_, "++++ STTS ++++\n";
-                STTS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- STTS ----\n";
+                STTS->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             else {
-                print $_INDENT_, "++++ ",uc $header->get_type()," ++++\n";
-                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- ",uc $header->get_type()," ----\n";
+                NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
         }
     }
     die "size ($_SIZE) is not zero. in VisualSampleEntry.\n" if $_SIZE;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

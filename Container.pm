@@ -16,90 +16,69 @@ use SKIP;
 use MECO;
 use UUID;
 use NULL;
+use Def;
 
 $|++;
 
 # Container
 sub new()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
     $INF = $_[1];
     $_SIZE = $_[2];
-    $counter = $_[3];
-    $_INDENT_ = $_[4];
-    my $DELIMITER = "\t";
+    $_INDENT_ = $_[3];
+    &Def::header($_INDENT_, __PACKAGE__);
+
+    my $DELIMITER = $Def::DELIMITER;
     my $objref = {};
     my $class = $_[0];
     while ($_SIZE > 0) {
-        my ($header) = Box->new($INF, $counter);
+        my ($header) = Box->new($INF);
         print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
-        $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
         switch($header->get_type()) {
             case "moov" {
-                print $_INDENT_, "++++ MOOV ++++\n";
-                MOOV->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);                
-                print $_INDENT_, "---- MOOV ----\n";
+                MOOV->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);                
             }
             case "ftyp" {
-                print $_INDENT_, "++++ FTYP ++++\n";
-                FTYP->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- FTYP ----\n";
+                FTYP->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "pdin" {
-                print $_INDENT_, "---- PDIN ----\n";
-                PDIN->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+                PDIN->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "free" {
-                print $_INDENT_, "++++ FREE ++++\n";
-                FREE->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print "---- FREE ----\n";
+                FREE->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "mdat" {
-                print $_INDENT_, "++++ MDAT ++++\n";
-                MDAT->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "++++ MDAT ++++\n";
+                MDAT->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "moof" {
-                print $_INDENT_, "++++ MOOF ++++\n";
-                MOOF->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print "++++ MOOF ++++\n";
+                MOOF->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "mfra" {
-                print $_INDENT_, "++++ MFRA ++++\n";
-                MFRA->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "++++ MFRA ++++\n";
+                MFRA->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "skip" {
-                print $_INDENT_, "++++ SKIP ++++\n";
-                SKIP->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "++++ SKIP ++++\n";
+                SKIP->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "meta" {
-                print $_INDENT_, "++++ META ++++\n";
-                META->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "++++ META ++++\n";
+                META->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "meco" {
-                print $_INDENT_, "++++ MECO ++++\n";
-                MECO->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "++++ MECO ++++\n";
+                MECO->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "uuid" {
-                print $_INDENT_, "++++ UUID ++++\n";
-                UUID->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "++++ UUID ++++\n";
+                UUID->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             else {
-                print $_INDENT_, "++++ NULL ++++\n";
-                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "++++ NULL ++++\n";
+                NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
         }
     }
     die "size is not zero in Container!\n" if $_SIZE;
     bless $objref, $class;
     return $class;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

@@ -9,8 +9,8 @@ sub new ()
     my $INF;
     $INF = $_[1];
     $_SIZE = $_[2];
-    $counter = $_[3];
     
     seek($INF, $_SIZE, 1);
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 1;

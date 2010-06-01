@@ -12,15 +12,16 @@ use ESDS;
 #
 sub new ()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
 
-    print "I prefer 4 parameter, but I only got $#_\n" if $#_ != 4;
+    die "I prefer 3 parameter, but I only got $#_\n" if $#_ != 3;
+
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
 
-    my $DELIMITER = "\t";
+    &Def::header($_INDENT_, __PACKAGE__);
+    my $DELIMITER = $Def::DELIMITER;
     my $st = SampleTable->new($INF);
     $st->print($_INDENT_);
 
@@ -58,40 +59,27 @@ sub new ()
 
     while ($_SIZE > 0) {
         print $_INDENT_, "size: ", $_SIZE, "\n";
-        my ($header) = Box->new($INF, $counter);
+        my ($header) = Box->new($INF);
         print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
-        $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
         switch($header->get_type()) {
             case "clap" {
-                print $_INDENT_, "++++ CLAP ++++\n";
-                CLAP->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- CLAP ----\n";
+                CLAP->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             case "pasp" {
-                print $_INDENT_, "++++ PASP ++++\n";
-                PASP->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- PASP ----\n";
+                PASP->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             case "avcC" {
-                print $_INDENT_, "++++ AVCC ++++\n";
-                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- AVCC ----\n";
+                NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "btrt" {
-                print $_INDENT_, "++++ BTRT ++++\n";
-                BTRT->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- BTRT ----\n";
+                BTRT->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "stts" {
-                print $_INDENT_, "++++ STTS ++++\n";
-                STTS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- STTS ----\n";
+                STTS->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             case "esds" {
-                print $_INDENT_, "++++ ESDS ++++\n";
-                ESDS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- ESDS ----\n";
+                ESDS->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
             else {
                 die "unknown type in Visual sample entry.\n";
@@ -99,6 +87,7 @@ sub new ()
         }
     }
     die "size ($_SIZE) is not zero in AudioSampleEntry.\n" if $_SIZE;
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;

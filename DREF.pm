@@ -13,15 +13,15 @@ use URN;
 #
 sub new ()
 {
-    my ($INF, $_SIZE, $counter, $_INDENT_);
+    my ($INF, $_SIZE, $_INDENT_);
 
-    print "I prefer 4 parameter, but I only got $#_\n" if $#_ != 4;
+    die "I prefer 3 parameter, but I only got $#_\n" if $#_ != 3;
     $INF = $_[1];
-    $counter = $_[2];
-    $_SIZE = $_[3];
-    $_INDENT_ = $_[4];
+    $_SIZE = $_[2];
+    $_INDENT_ = $_[3];
     
-    my $DELIMITER = "\t";
+    &Def::header($_INDENT_, __PACKAGE__);
+    my $DELIMITER = $Def::DELIMITER;
 
     my $fh = FullBox->new($INF);
     $fh->print($_INDENT_);
@@ -40,31 +40,25 @@ sub new ()
     my ($i);
     for ($i = 0; $i < $entry_count; $i ++) {
 	my $header;
-	$header = Box->new($INF, $counter);
+	$header = Box->new($INF);
         print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
-        $counter -= $header->get_size();
         $_SIZE -= $header->get_size();
 	 switch($header->get_type()) {
             case "url " {
-                print $_INDENT_, "++++ URL ++++\n";
-                URL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- URL ----\n";
+                URL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             case "urn " {
-                print $_INDENT_, "++++ URN ++++\n";
-                URN->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-                print $_INDENT_, "---- URN ----\n";
+                URN->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             else {
-		print $_INDENT_, "++++ NULL ++++\n";
-                NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- NULL ----\n";
+                NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
         }
     }
 
     die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;
         
+    &Def::footer($_INDENT_, __PACKAGE__);
 }
 
 1;
