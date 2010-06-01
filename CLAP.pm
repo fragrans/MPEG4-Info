@@ -19,15 +19,15 @@ sub new()
     my ($scleanApertureWidthN, $scleanApertureWidthD, $scleanApertureHeightN, $scleanApertureHeightD, $shorizOffN, $shorizOffD, $svertOffN, $svertOffD);
     my ($cleanApertureWidthN, $cleanApertureWidthD, $cleanApertureHeightN, $cleanApertureHeightD, $horizOffN, $horizOffD, $vertOffN, $vertOffD);
 
-    read $INF, $scleanApertureWidthN, 4 or die "fail to read cleanApertureWidthN.\n";
-    read $INF, $scleanApertureWidthD, 4 or die "fail to read cleanApertureWidthD.\n";
-    read $INF, $scleanApertureHeightN, 4 or die "fail to read cleanApertureHeightN.\n";
-    read $INF, $scleanApertureHeightD, 4 or die "fail to read cleanApertureHeightD.\n";
-    read $INF, $shorizOffN, 4 or die "fail to read horizOffN.\n";
-    read $INF, $shorizOffD, 4 or die "fail to read horizOffD.\n";
-    read $INF, $svertOffN, 4 or die "fail to read vertOffN.\n";
-    read $INF, $svertOffD, 4 or die "fail to read vertOffD.\n";
-  
+    $_SIZE -= read $INF, $scleanApertureWidthN, 4 or die "fail to read cleanApertureWidthN.\n";
+    $_SIZE -= read $INF, $scleanApertureWidthD, 4 or die "fail to read cleanApertureWidthD.\n";
+    $_SIZE -= read $INF, $scleanApertureHeightN, 4 or die "fail to read cleanApertureHeightN.\n";
+    $_SIZE -= read $INF, $scleanApertureHeightD, 4 or die "fail to read cleanApertureHeightD.\n";
+    $_SIZE -= read $INF, $shorizOffN, 4 or die "fail to read horizOffN.\n";
+    $_SIZE -= read $INF, $shorizOffD, 4 or die "fail to read horizOffD.\n";
+    $_SIZE -= read $INF, $svertOffN, 4 or die "fail to read vertOffN.\n";
+    $_SIZE -= read $INF, $svertOffD, 4 or die "fail to read vertOffD.\n";    
+
     $cleanApertureWidthN = unpack("N", $scleanApertureWidthN);
     $cleanApertureWidthN = unpack("N", $scleanApertureWidthD);
     $cleanApertureHeightN = unpack("N", $scleanApertureHeightN);
@@ -46,7 +46,6 @@ sub new()
     print $_INDENT_, "vertOffN: ", $vertOffN, "\n";
     print $_INDENT_, "vertOffD: ", $vertOffD, "\n";
 
-    $_SIZE -= 8;
     die "PASP size is not zero" if $_SIZE;
 }
 

@@ -28,13 +28,15 @@ sub new ()
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();
-    $_SIZE -= 4; #subtract the fullheader extension size
+    $_SIZE -= $fh->get_size(); #subtract the fullheader extension size
     
     my ($sentry_count, $entry_count);
-    read $INF, $sentry_count, 4 or die "failed to read entry count\n";
+    
+    $_SIZE -= read $INF, $sentry_count, 4 or die "failed to read entry count\n";
+
     $entry_count = unpack("N", $sentry_count);
     print $_INDENT_, "there are $entry_count entries.\n";
-    $_SIZE -= 4;
+
     my ($i);
     for ($i = 0; $i < $entry_count; $i ++) {
 	my $header;
@@ -60,6 +62,7 @@ sub new ()
             }
         }
     }
+
     die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;
         
 }

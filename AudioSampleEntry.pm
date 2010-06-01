@@ -32,12 +32,12 @@ sub new ()
     my (@local_reserved, $channelcount, $samplesize, $pre_defined, $local_reserved2, $samplerate);
     my ($slocal_reserved, $schannelcount, $ssamplesize, $spre_defined, $slocal_reserved2, $ssamplerate);
     
-    read $INF, $slocal_reserved, 4 * 2 or die "read reserved failed.\n";
-    read $INF, $schannelcount, 2 or die "read channelcount failed.\n";
-    read $INF, $ssamplesize, 2 or die "read samplesize failed.\n";
-    read $INF, $spre_defined, 2 or die "read pre_defined failed.\n";
-    read $INF, $slocal_reserved2, 2 or die "read reserved2 failed.\n";
-    read $INF, $ssamplerate, 4 or die "read samplerate failed.\n";
+    $_SIZE -= read $INF, $slocal_reserved, 4 * 2 or die "read reserved failed.\n";
+    $_SIZE -= read $INF, $schannelcount, 2 or die "read channelcount failed.\n";
+    $_SIZE -= read $INF, $ssamplesize, 2 or die "read samplesize failed.\n";
+    $_SIZE -= read $INF, $spre_defined, 2 or die "read pre_defined failed.\n";
+    $_SIZE -= read $INF, $slocal_reserved2, 2 or die "read reserved2 failed.\n";
+    $_SIZE -= read $INF, $ssamplerate, 4 or die "read samplerate failed.\n";
     
     @local_reserved = unpack("N" x 2, $slocal_reserved);
     $channelcount = unpack("n", $schannelcount);
@@ -54,7 +54,7 @@ sub new ()
     print $_INDENT_, "reserved2: ", $local_reserved2, "\n";
     printf "%s%s0x%x%s", $_INDENT_, "samplerate: ", $samplerate, "\n";
     
-    $_SIZE -= 4 * 2 + 2 + 2 + 2 + 2 + 4;
+
 
     while ($_SIZE > 0) {
         print $_INDENT_, "size: ", $_SIZE, "\n";

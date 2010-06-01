@@ -18,7 +18,7 @@ sub new ()
     $_INDENT_ = $_[4];
     
     my $fh = FullBox->new($INF);
-    print $_INDENT_, "version: ", $fh->get_version(), "flag: ", $fh->get_flag(), " \n";
+    $fh->print($_INDENT_);
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();

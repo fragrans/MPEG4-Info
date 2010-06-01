@@ -13,7 +13,7 @@ sub new ()
     $_SIZE = $_[3];
     $counter = $_[2];
     my $fh = FullBox->new($INF);
-    print $_INDENT_, "version: ", $fh->get_version(), "flag: ", $fh->get_flag(), " \n";
+    $fh->print($_INDENT_);
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();

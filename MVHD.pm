@@ -100,8 +100,7 @@ sub new ()
 
     $_SIZE -= 80;
     
-    die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;
-        
+    die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;        
 }
 
 1;

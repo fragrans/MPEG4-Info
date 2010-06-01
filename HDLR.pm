@@ -17,7 +17,7 @@ sub new ()
     $_INDENT_ = $_[4];
     # full box header, version and flag
     my $fh = FullBox->new($INF);
-    print $_INDENT_, "version: ", $fh->get_version(), "flag: ", $fh->get_flag(), " \n";
+    $fh->print($_INDENT_);
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();
@@ -25,11 +25,10 @@ sub new ()
     
     my ($pre_defined, $handler_type, @reserved, $name);
     my ($spre_defined, $shandler_type, $sreserved);
-
-    read $INF, $spre_defined, 4 or die "read pre_defined failed";
-    read $INF, $shandler_type, 4 or die "read hanlder type failed.";
-    read $INF, $sreserved, 12 or die "read reserved failed.";
-    $_SIZE -= 20;
+    
+    $_SIZE -= read $INF, $spre_defined, 4 or die "read pre_defined failed";
+    $_SIZE -= read $INF, $shandler_type, 4 or die "read hanlder type failed.";
+    $_SIZE -= read $INF, $sreserved, 12 or die "read reserved failed.";
     
     read $INF, $name, $_SIZE or die "read name failed.";
 

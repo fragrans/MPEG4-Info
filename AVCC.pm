@@ -18,13 +18,14 @@ sub new()
 
     my ($hSpacing, $vSpacing);
     my ($shSpacing, $svSpacing);
-    read $INF, $shSpacing, 4 or die "fail to read horizontal spacing.\n";
-    read $INF, $svSpacing, 4 or die "fail to read vertical spacing.\n";
+    $_SIZE -= read $INF, $shSpacing, 4 or die "fail to read horizontal spacing.\n";
+    $_SIZE -= read $INF, $svSpacing, 4 or die "fail to read vertical spacing.\n";
+
     $hSpacing = unpack("N", $shSpacing);
     $vSpacing = unpack("N", $svSpacing);
     print $_INDENT_, "hSpacing: ", $hSpacing, "\n";
     print $_INDENT_, "vSpacing: ", $vSpacing, "\n";
-    $_SIZE -= 8;
+
     die "PASP size is not zero" if $_SIZE;
 }
 

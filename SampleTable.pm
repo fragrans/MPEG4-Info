@@ -12,13 +12,16 @@ sub new()
     
     # This is a SampleTable
     my ($sreserved, $sdata_reference_index, @reserved, $data_reference_index);
-    read $INF, $sreserved, 6 or die "failed to read reserved!\n";
-    read $INF, $sdata_reference_index, 2 or die "failed to read data reference index!\n";
+    my ($sum);
+    $sum = 0;
+    $sum += read $INF, $sreserved, 6 or die "failed to read reserved!\n";
+    $sum += read $INF, $sdata_reference_index, 2 or die "failed to read data reference index!\n";
     @reserved = unpack("C" x 6, $sreserved);
     $data_reference_index  = unpack("n", $sdata_reference_index);
 
     $hash->{'reserved'} = "@reserved";
     $hash->{'data_reference_index'} = $data_reference_index;
+    $hash->{'size'} = $sum;
     bless $hash, $self;
     return $hash;
 }
@@ -31,6 +34,9 @@ sub get_data_reference_index() {
     return ($_[0]->{'data_reference_index'});
 }
 
+sub get_size() {
+    return ($_[0]->{'size'});
+}
 sub print() {
     die "Please do give indent.\n" if $#_ != 1;
     my (@reserved);

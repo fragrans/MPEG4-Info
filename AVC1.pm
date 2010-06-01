@@ -31,24 +31,24 @@ sub new ()
     my (@header_reserved, $data_reference_index);
     @header_reserved = $st->get_reserved();
     $data_reference_index = $st->get_data_reference_index();
-    $_SIZE -= 8; #subtract the sampletable extension size
+    $_SIZE -= $st->get_size(); #subtract the sampletable extension size
     
     my ($pre_defined, $reserved, @pre_defined2, $width, $height, $horizresolution, $vertresolution, $reserved2, $frame_count, $compressorname, $depth, $pre_defined3);
     my ($spre_defined, $sreserved, $spre_defined2, $swidth, $sheight, $shorizresolution, $svertresolution, $sreserved2, $sframe_count, $scompressorname, $sdepth, $spre_defined3);
     
-    read $INF, $spre_defined, 2 or die "read pre_defined failed.\n";
-    read $INF, $sreserved, 2 or die "read reserved failed.\n";
-    read $INF, $spre_defined2, 4 * 3 or die "read pre_defined2 failed.\n";
-    read $INF, $swidth, 2 or die "read width failed.\n";
-    read $INF, $sheight, 2 or die "read height failed.\n";
-    read $INF, $shorizresolution, 4 or die "read horizresolution failed.\n";
-    read $INF, $svertresolution, 4 or die "read vertresolution failed.\n";
-    read $INF, $sreserved2, 4 or die "read reserved2 failed.\n";
-    read $INF, $sframe_count, 2 or die "read frame_count failed.\n";
-    read $INF, $scompressorname, 32 or die "read compressorname failed.\n";
-    read $INF, $sdepth, 2 or die "read depth failed.\n";
-    read $INF, $spre_defined3, 2 or die "read pre_defined3 failed.\n";
-
+    $_SIZE -= read $INF, $spre_defined, 2 or die "read pre_defined failed.\n";
+    $_SIZE -= read $INF, $sreserved, 2 or die "read reserved failed.\n";
+    $_SIZE -= read $INF, $spre_defined2, 4 * 3 or die "read pre_defined2 failed.\n";
+    $_SIZE -= read $INF, $swidth, 2 or die "read width failed.\n";
+    $_SIZE -= read $INF, $sheight, 2 or die "read height failed.\n";
+    $_SIZE -= read $INF, $shorizresolution, 4 or die "read horizresolution failed.\n";
+    $_SIZE -= read $INF, $svertresolution, 4 or die "read vertresolution failed.\n";
+    $_SIZE -= read $INF, $sreserved2, 4 or die "read reserved2 failed.\n";
+    $_SIZE -= read $INF, $sframe_count, 2 or die "read frame_count failed.\n";
+    $_SIZE -= read $INF, $scompressorname, 32 or die "read compressorname failed.\n";
+    $_SIZE -= read $INF, $sdepth, 2 or die "read depth failed.\n";
+    $_SIZE -= read $INF, $spre_defined3, 2 or die "read pre_defined3 failed.\n";
+    
     
     $pre_defined = unpack("n", $spre_defined);
     $reserved = unpack("n", $sreserved);
@@ -75,8 +75,6 @@ sub new ()
     print $_INDENT_, "compressorname: ", $compressorname, "\n";
     print $_INDENT_, "depth: ", $depth, "\n";
     print $_INDENT_, "pre_defined3: ", $pre_defined3, "\n";
-
-    $_SIZE -= 70;
 
     while ($_SIZE > 0) {
         print $_INDENT_, "size: ", $_SIZE, "\n";
@@ -107,11 +105,10 @@ sub new ()
                 STTS->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
                 print $_INDENT_, "---- STTS ----\n";
             }
-            
             else {
-                print $_INDENT_, "++++ NULL ++++\n";
+                print $_INDENT_, "++++ ",uc $header->get_type()," ++++\n";
                 NULL->new($INF, $counter, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                print $_INDENT_, "---- NULL ----\n";
+                print $_INDENT_, "---- ",uc $header->get_type()," ----\n";
             }
         }
     }
