@@ -25,11 +25,11 @@ sub new ()
     my ($pre_defined, $handler_type, @reserved, $name);
     my ($spre_defined, $shandler_type, $sreserved);
     
-    $_SIZE -= read $INF, $spre_defined, 4 or die "read pre_defined failed";
-    $_SIZE -= read $INF, $shandler_type, 4 or die "read hanlder type failed.";
-    $_SIZE -= read $INF, $sreserved, 12 or die "read reserved failed.";
+    $_SIZE -= &Def::read($INF, $spre_defined, 4);
+    $_SIZE -= &Def::read($INF, $shandler_type, 4);
+    $_SIZE -= &Def::read($INF, $sreserved, 12);
     
-    read $INF, $name, $_SIZE or die "read name failed.";
+    &Def::read($INF, $name, );
 
     $pre_defined = unpack("N", $spre_defined);
     $handler_type = $shandler_type;

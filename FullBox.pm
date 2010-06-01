@@ -14,8 +14,8 @@ sub new()
     my ($sversion, $sflag, $version, $flag);
     my ($sum);
     $sum = 0;
-    $sum += read $INF, $sversion, 1 or die "failed to read version!\n";
-    $sum += read $INF, $sflag, 3 or die "failed to read flag!\n";
+    $sum += &Def::read($INF, $sversion, 1);
+    $sum += &Def::read($INF, $sflag, 3);
     
     $version = unpack("C", $sversion);
     $flag = unpack("B[24]", $sflag);

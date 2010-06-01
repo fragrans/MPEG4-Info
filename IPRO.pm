@@ -20,7 +20,7 @@ sub new ()
     
     # read count
     my ($sprotection_count, $protection_count);
-    read $INF, $sprotection_count, 2 or die "read protection count failed. $!\n";
+    &Def::read($INF, $sprotection_count, 2);
     $protection_count = unpack("n", $sprotection_count);
     print $_INDENT_, "protection count: ", $protection_count, "\n";
     $_SIZE -= 2;

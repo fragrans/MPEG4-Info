@@ -30,10 +30,10 @@ sub new ()
     my ($screation_time, $smodification_time, $stimescale, $stimeduration);
     
     if ($version == 1) {
-        $_SIZE -= read $INF, $screation_time, 8 or die "failed to read creation time!\n";
-        $_SIZE -= read $INF, $smodification_time, 8 or die "failed to read modification time!\n";
-        $_SIZE -= read $INF, $stimescale, 4 or die "failed to read timescale!\n";
-        $_SIZE -= read $INF, $stimeduration, 8 or die "failed to read timeduration!\n";
+        $_SIZE -= &Def::read($INF, $screation_time, 8);
+        $_SIZE -= &Def::read($INF, $smodification_time, 8);
+        $_SIZE -= &Def::read($INF, $stimescale, 4);
+        $_SIZE -= &Def::read($INF, $stimeduration, 8);
         $creation_time = unpack("Q>", $screation_time);
         $modification_time = unpack("Q>", $smodification_time);
         $timescale = unpack("N", $stimescale);
@@ -41,10 +41,10 @@ sub new ()
 
         
     } elsif ($version == 0) {
-        $_SIZE -= read $INF, $screation_time, 4 or die "failed to read creation time!\n";
-        $_SIZE -= read $INF, $smodification_time, 4 or die "failed to read modification time!\n";
-        $_SIZE -= read $INF, $stimescale, 4 or die "failed to read timescale!\n";
-        $_SIZE -= read $INF, $stimeduration, 4 or die "failed to read timeduration!\n";
+        $_SIZE -= &Def::read($INF, $screation_time, 4);
+        $_SIZE -= &Def::read($INF, $smodification_time, 4);
+        $_SIZE -= &Def::read($INF, $stimescale, 4);
+        $_SIZE -= &Def::read($INF, $stimeduration, 4);
         $creation_time = unpack("N", $screation_time);
         $modification_time = unpack("N", $smodification_time);
         $timescale = unpack("N", $stimescale);
@@ -71,14 +71,13 @@ sub new ()
     my ($srate, $svolume, $sreserved, $sreserved2, $smatrix, $spre_defined, $snext_track_id);
     my ($rate, $volume, $reserved, @reserved2, @matrix, @pre_defined, $next_track_id);
     
-    $_SIZE -= read $INF, $srate, 4 or die "faile to read rate!\n";
-    $_SIZE -= read $INF, $svolume, 2 or die "failed to read volume!\n";
-    $_SIZE -= read $INF, $sreserved, 2 or die "failed to read reserved!\n";
-    $_SIZE -= read $INF, $sreserved2, 8 or die "failed to read reserved!\n";
-    $_SIZE -= read $INF, $smatrix, 36 or die "failed to read matrix!\n";
-    $_SIZE -= read $INF, $spre_defined, 24 or die "failed to read pre_defined!\n";
-    print tell $INF;
-    $_SIZE -= read $INF, $snext_track_id, 4 or die "failed to read next track id!\n";
+    $_SIZE -= &Def::read($INF, $srate, 4);
+    $_SIZE -= &Def::read($INF, $svolume, 2);
+    $_SIZE -= &Def::read($INF, $sreserved, 2);
+    $_SIZE -= &Def::read($INF, $sreserved2, 8);
+    $_SIZE -= &Def::read($INF, $smatrix, 36);
+    $_SIZE -= &Def::read($INF, $spre_defined, 24);
+    $_SIZE -= &Def::read($INF, $snext_track_id, 4);
 
     $rate = unpack("N", $srate);
     $volume = unpack("n", $svolume);

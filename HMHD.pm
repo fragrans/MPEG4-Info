@@ -27,11 +27,11 @@ sub new ()
     my ($smaxPDUsize, $savgPDUsize, $smaxbitrate, $savgbitrate, $sreserved);   
     my ($maxPDUsize, $avgPDUsize, $maxbitrate, $avgbitrate, $reserved);
 
-    read $INF, $smaxPDUsize, 2 or die "failed to read max pdu size.\n";
-    read $INF, $savgPDUsize, 2 or die "failed to read avg pdu size.\n";
-    read $INF, $smaxbitrate, 4 or die "failed to read max bitrate size.\n";
-    read $INF, $savgbitrate, 4 or die "failed to read avg bitrate size.\n";
-    read $INF, $sreserved, 4 or die "failed to read HMHD reserved.\n";
+    &Def::read($INF, $smaxPDUsize, 2);
+    &Def::read($INF, $savgPDUsize, 2);
+    &Def::read($INF, $smaxbitrate, 4);
+    &Def::read($INF, $savgbitrate, 4);
+    &Def::read($INF, $sreserved, 4);
     $maxPDUsize = unpack("n", $smaxPDUsize);
     $avgPDUsize = unpack("n", $savgPDUsize);
     $maxbitrate = unpack("N", $smaxbitrate);

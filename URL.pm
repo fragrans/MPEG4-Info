@@ -28,7 +28,7 @@ sub new ()
     die "size is not zero yet.\n";
     my ($location);
     print $_INDENT_, "location size: $_SIZE\n";
-    read $INF, $location, $_SIZE or die "failed to read location\n";
+    &Def::read($INF, $location, $_SIZE);
     print $_INDENT_, "location: ", $location, "\n";
     $_SIZE -= $_SIZE;
     die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;

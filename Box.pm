@@ -21,14 +21,14 @@ sub new()
     my ($sum);
     $position = tell $INF;
     $sum = 0;
-    $sum += read $INF, $ssize, 4 or die "read size failed. $!\n";
-    $sum += read $INF, $stype, 4 or die "read type failed. $!\n";
+    $sum += &Def::read ($INF, $ssize, 4);
+    $sum += &Def::read ($INF, $stype, 4);
 
     $size = unpack("N", $ssize);
     # size is 64 bit?
     if ($size == 1) {
         die "Box size is 1\n";
-        $sum += read $INF, $ssize, 8 or die "read long size failed. $!\n";
+        $sum += &Def::read($INF, $ssize, 8);
         $size = unpack("Q>", $ssize);
     } elsif ($size == 0) {
         die "Box size is 0\n";
@@ -36,7 +36,7 @@ sub new()
     
     if ($stype eq "uuid") {
         die "uuid\n";
-        $sum += read $INF, $uuid, 16;
+        $sum += &Def::read($INF, $uuid, 16);
         print $uuid;
     }
 

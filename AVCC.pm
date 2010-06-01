@@ -17,8 +17,8 @@ sub new()
 
     my ($hSpacing, $vSpacing);
     my ($shSpacing, $svSpacing);
-    $_SIZE -= read $INF, $shSpacing, 4 or die "fail to read horizontal spacing.\n";
-    $_SIZE -= read $INF, $svSpacing, 4 or die "fail to read vertical spacing.\n";
+    $_SIZE -= &Def::read($INF, $shSpacing, 4);
+    $_SIZE -= &Def::read($INF, $svSpacing, 4);
 
     $hSpacing = unpack("N", $shSpacing);
     $vSpacing = unpack("N", $svSpacing);

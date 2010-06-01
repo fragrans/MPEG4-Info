@@ -34,7 +34,7 @@ sub new()
     my $class = $_[0];
     while ($_SIZE > 0) {
         my ($header) = Box->new($INF);
-        print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
+        $header->print($_INDENT_);
         $_SIZE -= $header->get_size();
         switch($header->get_type()) {
             case "moov" {

@@ -25,8 +25,8 @@ sub new ()
     my ($srate, $sinitial_delay);
 
     while ($_SIZE > 0) {
-        read $INF, $srate, 4 or die "fail to read rate";
-        read $INF, $sinitial_delay, 4 or die "fail to read initial delay";
+        &Def::read($INF, $srate, 4);
+        &Def::read($INF, $sinitial_delay, 4);
         $rate = unpack("N", $srate);
         $initial_delay = unpack("N", $sinitial_delay);
         print $_INDENT_ . "rate: " . $rate;

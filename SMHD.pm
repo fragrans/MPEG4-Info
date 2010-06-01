@@ -26,8 +26,8 @@ sub new ()
     
     my ($sbalance, $sreserved);
     my ($balance, $reserved);
-    read $INF, $sbalance, 2 or die "failed to read balance.\n";
-    read $INF, $sreserved, 2 or die "failed to read reserved.\n";
+    &Def::read($INF, $sbalance, 2);
+    &Def::read($INF, $sreserved, 2);
     $balance = unpack("n", $sbalance);
     $reserved = unpack("n", $sreserved);
     print $_INDENT_, "balance: ", $balance, "\n";

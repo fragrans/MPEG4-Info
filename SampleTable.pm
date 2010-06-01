@@ -14,8 +14,8 @@ sub new()
     my ($sreserved, $sdata_reference_index, @reserved, $data_reference_index);
     my ($sum);
     $sum = 0;
-    $sum += read $INF, $sreserved, 6 or die "failed to read reserved!\n";
-    $sum += read $INF, $sdata_reference_index, 2 or die "failed to read data reference index!\n";
+    $sum += &Def::read($INF, $sreserved, 6);
+    $sum += &Def::read($INF, $sdata_reference_index, 2);
     @reserved = unpack("C" x 6, $sreserved);
     $data_reference_index  = unpack("n", $sdata_reference_index);
 

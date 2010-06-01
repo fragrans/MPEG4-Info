@@ -27,10 +27,10 @@ sub new ()
     my ($screation_time, $smodification_time, $stimescale, $stimeduration);
     
     if ($version == 1) {
-        read $INF, $screation_time, 8 or die "failed to read creation time!\n";
-        read $INF, $smodification_time, 8 or die "failed to read modification time!\n";
-        read $INF, $stimescale, 4 or die "failed to read timescale!\n";
-        read $INF, $stimeduration, 8 or die "failed to read timeduration!\n";
+        &Def::read($INF, $screation_time, 8);
+        &Def::read($INF, $smodification_time, 8);
+        &Def::read($INF, $stimescale, 4);
+        &Def::read($INF, $stimeduration, 8);
 
         $creation_time = unpack("Q>", $screation_time);
         $modification_time = unpack("Q>", $smodification_time);
@@ -39,10 +39,10 @@ sub new ()
 
         $_SIZE -= 28;
     } elsif ($version == 0) {
-        read $INF, $screation_time, 4 or die "failed to read creation time!\n";
-        read $INF, $smodification_time, 4 or die "failed to read modification time!\n";
-        read $INF, $stimescale, 4 or die "failed to read timescale!\n";
-        read $INF, $stimeduration, 4 or die "failed to read timeduration!\n";
+        &Def::read($INF, $screation_time, 4);
+        &Def::read($INF, $smodification_time, 4);
+        &Def::read($INF, $stimescale, 4);
+        &Def::read($INF, $stimeduration, 4);
 
         $creation_time = unpack("N", $screation_time);
         $modification_time = unpack("N", $smodification_time);
@@ -69,8 +69,8 @@ sub new ()
     my ($slanguage,$spre_defined);
     my (@codes, $language, $pre_defined);
 
-    read $INF, $slanguage, 2 or die "read language failed.";
-    read $INF, $spre_defined, 2 or die "read pre_defined failed";
+    &Def::read($INF, $slanguage, 2);
+    &Def::read($INF, $spre_defined, 2);
     
     $language = unpack("n", $slanguage);
     $codes[0] = $language & 31;

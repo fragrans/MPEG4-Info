@@ -23,11 +23,11 @@ sub new ()
     my ($screation_time, $smodification_time, $strack_id, $sreserved, $sduration);
     
     if ($version == 1) {
-        read $INF, $screation_time, 8 or die "failed to read creation time!\n";
-        read $INF, $smodification_time, 8 or die "failed to read modification time!\n";
-        read $INF, $strack_id, 4 or die "failed to read track id!\n";
-        read $INF, $sreserved, 4 or die "failed to read reserved!\n";
-        read $INF, $sduration, 8 or die "failed to read duration!\n";
+        &Def::read($INF, $screation_time, 8);
+        &Def::read($INF, $smodification_time, 8);
+        &Def::read($INF, $strack_id, 4);
+        &Def::read($INF, $sreserved, 4);
+        &Def::read($INF, $sduration, 8);
         
         $creation_time = unpack("Q>", $screation_time);
         $modification_time = unpack("Q>", $smodification_time);
@@ -37,11 +37,11 @@ sub new ()
         
         $_SIZE -= 32;
     } elsif ($version == 0) {
-        read $INF, $screation_time, 4 or die "failed to read creation time!\n";
-        read $INF, $smodification_time, 4 or die "failed to read modification time!\n";
-        read $INF, $strack_id, 4 or die "failed to read track id!\n";
-        read $INF, $sreserved, 4 or die "failed to read reserved!\n";
-        read $INF, $sduration, 4 or die "failed to read timeduration!\n";
+        &Def::read($INF, $screation_time, 4);
+        &Def::read($INF, $smodification_time, 4);
+        &Def::read($INF, $strack_id, 4);
+        &Def::read($INF, $sreserved, 4);
+        &Def::read($INF, $sduration, 4);
         $creation_time = unpack("N", $screation_time);
         $modification_time = unpack("N", $smodification_time);
         $track_id = unpack("N", $strack_id);
@@ -71,14 +71,14 @@ sub new ()
     my ($sreserved2, $slayer, $salternate_group, $svolume, $sreserved3, $smatrix, $swidth, $sheight);
     my (@reserved2, $layer, $alternate_group, $volume, $reserved3,@matrix, $width, $height);
 
-    read $INF, $sreserved2, 8 or die "failed to read reserved2!\n";
-    read $INF, $slayer, 2 or die "failed to read layer!\n";
-    read $INF, $salternate_group, 2 or die "failed to read alternate_group!\n";
-    read $INF, $svolume, 2 or die "failed to read next volume!\n";
-    read $INF, $sreserved3, 2 or die "failed to read reserved2!\n";
-    read $INF, $smatrix, 36 or die "failed to read matrix!\n";
-    read $INF, $swidth, 4 or die "failed to read width!\n";
-    read $INF, $sheight, 4 or die "failed to read height!\n";
+    &Def::read($INF, $sreserved2, 8);
+    &Def::read($INF, $slayer, 2);
+    &Def::read($INF, $salternate_group, 2);
+    &Def::read($INF, $svolume, 2);
+    &Def::read($INF, $sreserved3, 2);
+    &Def::read($INF, $smatrix, 36);
+    &Def::read($INF, $swidth, 4);
+    &Def::read($INF, $sheight, 4);
     
     
     @reserved2 = unpack("NN", $sreserved2);

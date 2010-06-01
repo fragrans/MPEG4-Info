@@ -32,7 +32,7 @@ sub new ()
     
     my ($sentry_count, $entry_count);
     
-    $_SIZE -= read $INF, $sentry_count, 4 or die "failed to read entry count\n";
+    $_SIZE -= &Def::read($INF, $sentry_count, 4);
 
     $entry_count = unpack("N", $sentry_count);
     print $_INDENT_, "there are $entry_count entries.\n";

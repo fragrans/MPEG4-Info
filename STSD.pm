@@ -38,7 +38,7 @@ sub new ()
     $_SIZE -= 4; #subtract the fullheader extension size
     
     my ($sentry_count, $entry_count);
-    read $INF, $sentry_count, 4 or die "failed to read entry count\n";
+    &Def::read($INF, $sentry_count, 4);
     $entry_count = unpack("N", $sentry_count);
     print $_INDENT_, "there are $entry_count entries.\n";
     $_SIZE -= 4;

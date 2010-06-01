@@ -18,14 +18,14 @@ sub new()
     my ($scleanApertureWidthN, $scleanApertureWidthD, $scleanApertureHeightN, $scleanApertureHeightD, $shorizOffN, $shorizOffD, $svertOffN, $svertOffD);
     my ($cleanApertureWidthN, $cleanApertureWidthD, $cleanApertureHeightN, $cleanApertureHeightD, $horizOffN, $horizOffD, $vertOffN, $vertOffD);
 
-    $_SIZE -= read $INF, $scleanApertureWidthN, 4 or die "fail to read cleanApertureWidthN.\n";
-    $_SIZE -= read $INF, $scleanApertureWidthD, 4 or die "fail to read cleanApertureWidthD.\n";
-    $_SIZE -= read $INF, $scleanApertureHeightN, 4 or die "fail to read cleanApertureHeightN.\n";
-    $_SIZE -= read $INF, $scleanApertureHeightD, 4 or die "fail to read cleanApertureHeightD.\n";
-    $_SIZE -= read $INF, $shorizOffN, 4 or die "fail to read horizOffN.\n";
-    $_SIZE -= read $INF, $shorizOffD, 4 or die "fail to read horizOffD.\n";
-    $_SIZE -= read $INF, $svertOffN, 4 or die "fail to read vertOffN.\n";
-    $_SIZE -= read $INF, $svertOffD, 4 or die "fail to read vertOffD.\n";    
+    $_SIZE -= &Def::read($INF, $scleanApertureWidthN, 4);
+    $_SIZE -= &Def::read($INF, $scleanApertureWidthD, 4);
+    $_SIZE -= &Def::read($INF, $scleanApertureHeightN, 4);
+    $_SIZE -= &Def::read($INF, $scleanApertureHeightD, 4);
+    $_SIZE -= &Def::read($INF, $shorizOffN, 4);
+    $_SIZE -= &Def::read($INF, $shorizOffD, 4);
+    $_SIZE -= &Def::read($INF, $svertOffN, 4);
+    $_SIZE -= &Def::read($INF, $svertOffD, 4);
 
     $cleanApertureWidthN = unpack("N", $scleanApertureWidthN);
     $cleanApertureWidthN = unpack("N", $scleanApertureWidthD);

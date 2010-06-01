@@ -36,18 +36,18 @@ sub new ()
     my ($pre_defined, $reserved, @pre_defined2, $width, $height, $horizresolution, $vertresolution, $reserved2, $frame_count, $compressorname, $depth, $pre_defined3);
     my ($spre_defined, $sreserved, $spre_defined2, $swidth, $sheight, $shorizresolution, $svertresolution, $sreserved2, $sframe_count, $scompressorname, $sdepth, $spre_defined3);
     
-    read $INF, $spre_defined, 2 or die "read pre_defined failed.\n";
-    read $INF, $sreserved, 2 or die "read reserved failed.\n";
-    read $INF, $spre_defined2, 4 * 3 or die "read pre_defined2 failed.\n";
-    read $INF, $swidth, 2 or die "read width failed.\n";
-    read $INF, $sheight, 2 or die "read height failed.\n";
-    read $INF, $shorizresolution, 4 or die "read horizresolution failed.\n";
-    read $INF, $svertresolution, 4 or die "read vertresolution failed.\n";
-    read $INF, $sreserved2, 4 or die "read reserved2 failed.\n";
-    read $INF, $sframe_count, 2 or die "read frame_count failed.\n";
-    read $INF, $scompressorname, 32 or die "read compressorname failed.\n";
-    read $INF, $sdepth, 2 or die "read depth failed.\n";
-    read $INF, $spre_defined3, 2 or die "read pre_defined3 failed.\n";
+    &Def::read($INF, $spre_defined, 2);
+    &Def::read($INF, $sreserved, 2);
+    &Def::read($INF, $spre_defined2, 12);
+    &Def::read($INF, $swidth, 2);
+    &Def::read($INF, $sheight, 2);
+    &Def::read($INF, $shorizresolution, 4);
+    &Def::read($INF, $svertresolution, 4);
+    &Def::read($INF, $sreserved2, 4);
+    &Def::read($INF, $sframe_count, 2);
+    &Def::read($INF, $scompressorname, 32);
+    &Def::read($INF, $sdepth, 2);
+    &Def::read($INF, $spre_defined3, 2);
 
     
     $pre_defined = unpack("n", $spre_defined);

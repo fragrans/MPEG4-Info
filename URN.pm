@@ -26,7 +26,7 @@ sub new ()
     $_SIZE -= 4; #subtract the fullheader extension size
     
     my ($location);
-    read $INF, $location, $_SIZE or die "failed to read location\n";
+    &Def::read($INF, $location, $_SIZE);
     print $_INDENT_, "location: ", $location, "\n";
     $_SIZE -= $_SIZE;
     die "need some modification here. ;-!";

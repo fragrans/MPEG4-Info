@@ -22,8 +22,8 @@ sub new ()
     
     my ($sgraphicmode, $sopcolor);
     my ($graphicmode, @opcolor);
-    read $INF, $sgraphicmode, 2 or die "failed to read graphic mode.\n";
-    read $INF, $sopcolor, 6 or die "failed to read opcolor.\n";
+    &Def::read($INF, $sgraphicmode, 2);
+    &Def::read($INF, $sopcolor, 6);
     $graphicmode = unpack("n", $sgraphicmode);
     @opcolor = unpack("nnn", $sopcolor);
     print $_INDENT_, "graphic mode: ", $graphicmode, "\n";

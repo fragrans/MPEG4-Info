@@ -36,8 +36,8 @@ sub new ()
         switch($header->get_type()) {
             case "mvhd" {
                 
-#                MVHD->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
-                NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);                
+                MVHD->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+#                NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);                
             }
             case "trak" {
                 TRAK->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);

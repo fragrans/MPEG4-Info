@@ -16,9 +16,9 @@ sub new()
     my ($bufferSizeDB, $maxBitrate, $avgBitrate);
     my ($sbufferSizeDB, $smaxBitrate, $savgBitrate);
 
-    $_SIZE -= read $INF, $sbufferSizeDB, 4 or die "fail to read buffersizeDB.\n";
-    $_SIZE -= read $INF, $smaxBitrate, 4 or die "fail to read maxBitrate.\n";
-    $_SIZE -= read $INF, $savgBitrate, 4 or die "fail to read avgBitrate.\n";
+    $_SIZE -= &Def::read($INF, $sbufferSizeDB, 4);
+    $_SIZE -= &Def::read($INF, $smaxBitrate, 4);
+    $_SIZE -= &Def::read($INF, $savgBitrate, 4);
     
     $bufferSizeDB = unpack("N", $sbufferSizeDB);
     $maxBitrate = unpack("N", $smaxBitrate);

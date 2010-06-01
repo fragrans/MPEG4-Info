@@ -32,12 +32,12 @@ sub new ()
     my (@local_reserved, $channelcount, $samplesize, $pre_defined, $local_reserved2, $samplerate);
     my ($slocal_reserved, $schannelcount, $ssamplesize, $spre_defined, $slocal_reserved2, $ssamplerate);
     
-    read $INF, $slocal_reserved, 4 * 2 or die "read reserved failed.\n";
-    read $INF, $schannelcount, 2 or die "read channelcount failed.\n";
-    read $INF, $ssamplesize, 2 or die "read samplesize failed.\n";
-    read $INF, $spre_defined, 2 or die "read pre_defined failed.\n";
-    read $INF, $slocal_reserved2, 2 or die "read reserved2 failed.\n";
-    read $INF, $ssamplerate, 4 or die "read samplerate failed.\n";
+    &Def::read($INF, $slocal_reserved, 8);
+    &Def::read($INF, $schannelcount, 2);
+    &Def::read($INF, $ssamplesize, 2);
+    &Def::read($INF, $spre_defined, 2);
+    &Def::read($INF, $slocal_reserved2, 2);
+    &Def::read($INF, $ssamplerate, 4);
     
     @local_reserved = unpack("N" x 2, $slocal_reserved);
     $channelcount = unpack("n", $schannelcount);

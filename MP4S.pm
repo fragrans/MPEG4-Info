@@ -26,7 +26,7 @@ sub new ()
     $data_reference_index = $st->get_data_reference_index();
     $_SIZE -= 8; #subtract the sampletable extension size
     my (@data, $sdata);
-    read $INF, $sdata, $_SIZE or die "read data failed.\n";
+    &Def::read($INF, $sdata, );
     @data = unpack("C" x $_SIZE, $sdata);
     print $_INDENT_, "data: ", "@data", "\n";
     $_SIZE -= $_SIZE;

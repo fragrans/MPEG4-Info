@@ -25,7 +25,7 @@ sub new ()
     $_SIZE -= 4; #subtract the fullheader extension size
 
     my ($sentry_count, $entry_count);
-    read $INF, $sentry_count, 4 or die "failed to read entry count\n";
+    &Def::read($INF, $sentry_count, 4);
     $entry_count = unpack("N", $sentry_count);
     print $_INDENT_, "there are $entry_count entries.\n";
     $_SIZE -= 4;
@@ -34,8 +34,8 @@ sub new ()
         my ($ssample_count, $ssample_delta);
         my ($sample_count, $sample_delta);
         
-        read $INF, $ssample_count, 4 or die "failed to read sample count.";
-        read $INF, $ssample_delta, 4 or die "failed to read sample delta.";
+        &Def::read($INF, $ssample_count, 4);
+        &Def::read($INF, $ssample_delta, 4);
         $sample_count = unpack("N", $ssample_count);
         $sample_delta = unpack("N", $ssample_delta);
         print $_INDENT_, "sample count: ", $sample_count, "\n";
