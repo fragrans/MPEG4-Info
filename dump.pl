@@ -31,7 +31,7 @@ $counter = stat($file)->size;
 print "file size: ".$counter;
 print "\n";
 
-Container->new(*$INF{IO}, $counter, $counter, "");
+Container->new($INF, $counter, "");
 
 close $INF
     or die "\nCan't close $file: $!\n";
