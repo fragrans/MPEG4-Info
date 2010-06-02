@@ -30,12 +30,10 @@ sub new()
     &Def::header($_INDENT_, __PACKAGE__);
 
     my $DELIMITER = $Def::DELIMITER;
-    my $objref = {};
-    my $class = $_[0];
     while ($_SIZE > 0) {
         my ($header) = Box->new($INF);
-        $header->print($_INDENT_);
         $_SIZE -= $header->get_size();
+        $header->print($_INDENT_);
         switch($header->get_type()) {
             case "moov" {
                 MOOV->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);                
@@ -75,9 +73,8 @@ sub new()
             }
         }
     }
-    die "size is not zero in Container!\n" if $_SIZE;
-    bless $objref, $class;
-    return $class;
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
+    
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

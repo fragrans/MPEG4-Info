@@ -20,11 +20,11 @@ sub new ()
     &Def::header($_INDENT_, __PACKAGE__);
     
     my $fh = FullBox->new($INF);
+    $_SIZE -= $fh->get_size();
     $fh->print($_INDENT_);
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();
-    $_SIZE -= 4; #subtract the fullheader extension size
     
     my ($creation_time, $modification_time, $timescale, $timeduration);
     my ($screation_time, $smodification_time, $stimescale, $stimeduration);
@@ -99,7 +99,7 @@ sub new ()
     print  $_INDENT_ . "next_track_id: ". $next_track_id . "\n";
 
     
-    die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;        
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;        
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

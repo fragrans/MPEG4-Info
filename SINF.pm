@@ -11,11 +11,12 @@ sub new ()
     $_SIZE = $_[2];
     $_INDENT_ = $_[3];
     &Def::header($_INDENT_, __PACKAGE__);
+
     my $DELIMITER = $Def::DELIMITER;
-     while ($_SIZE > 0) {
+    while ($_SIZE > 0) {
         my ($header) = Box->new($INF);
-        print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
         $_SIZE -= $header->get_size();
+        $header->print($_INDENT_);
         switch($header->get_type()) {
             case "frma" {
                 FRMA->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
@@ -34,7 +35,7 @@ sub new ()
             }
         }
     }
-    die "size is not 0, dying. ;-) \n" if $_SIZE;
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

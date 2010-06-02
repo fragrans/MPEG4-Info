@@ -17,23 +17,23 @@ sub new ()
     $_SIZE = $_[2];
     $_INDENT_ = $_[3];
     
+    &Def::header($_INDENT_, __PACKAGE__);    
     my $fh = FullBox->new($INF);
+    $_SIZE -= $fh->get_size();
     $fh->print($_INDENT_);
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();
-    $_SIZE -= 4; #subtract the fullheader extension size
     
     my ($sbalance, $sreserved);
     my ($balance, $reserved);
-    &Def::read($INF, $sbalance, 2);
-    &Def::read($INF, $sreserved, 2);
+    $_SIZE -= &Def::read($INF, $sbalance, 2);
+    $_SIZE -= &Def::read($INF, $sreserved, 2);
     $balance = unpack("n", $sbalance);
     $reserved = unpack("n", $sreserved);
     print $_INDENT_, "balance: ", $balance, "\n";
     print $_INDENT_ ,"reserved: ", $reserved, "\n";
-    $_SIZE -= 4;
-    die $_INDENT_ . "SMHD size is not zero.\n" if $_SIZE;
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

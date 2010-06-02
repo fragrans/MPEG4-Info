@@ -11,7 +11,7 @@ sub new()
     $INF = $_[1];
     $_SIZE = $_[2];
     $_INDENT_ = $_[3];
-
+    &Def::header($_INDENT_, __PACKAGE__);
     
     my ($bufferSizeDB, $maxBitrate, $avgBitrate);
     my ($sbufferSizeDB, $smaxBitrate, $savgBitrate);
@@ -28,7 +28,7 @@ sub new()
     print $_INDENT_ . "maxBitrate: ". $maxBitrate . "\n";
     print $_INDENT_ . "avgBitrate: ". $avgBitrate . "\n";
 
-    die "BTRT size ($_SIZE) is not zero.\n" if $_SIZE;
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 1;

@@ -31,8 +31,8 @@ sub new ()
 
     while($_SIZE>0) {
         my $header = Box->new($INF);
-        $header->print($_INDENT_);
         $_SIZE -= $header->get_size();
+        $header->print($_INDENT_);
         switch($header->get_type()) {
             case "mvhd" {
                 
@@ -60,7 +60,7 @@ sub new ()
         }
         
     }
-    die "size ($_SIZE)is not zero in MOOV\n" if $_SIZE;
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 1;

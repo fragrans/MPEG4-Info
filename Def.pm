@@ -13,6 +13,6 @@ sub footer() {
 }
 
 sub read() {
-    die "unmatched parameters $#_ \n" if $#_ != 3;
+    die "unmatched parameters (@_) with $#_ \n" if $#_ != 2;
     read $_[0], $_[1], $_[2] or die "read failed\n";
 }

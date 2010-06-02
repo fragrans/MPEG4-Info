@@ -18,14 +18,14 @@ sub new ()
 
     my $fh = FullBox->new($INF);
     $fh->print($_INDENT_);
+    $_SIZE -= $fh->get_size();
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();
-    $_SIZE -= 4; #subtract the fullheader extension size
 
     print $_INDENT_, "I don't know the ESDS content yet.\n";
     seek $INF, $_SIZE, 1;
-#    die "size is not zero. \n" if $_SIZE;
+#    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

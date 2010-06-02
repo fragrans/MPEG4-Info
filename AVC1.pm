@@ -26,12 +26,12 @@ sub new ()
     my $DELIMITER = $Def::DELIMITER;
     
     my $st = SampleTable->new($INF);
+    $_SIZE -= $st->get_size();
     $st->print($_INDENT_);
 
     my (@header_reserved, $data_reference_index);
     @header_reserved = $st->get_reserved();
     $data_reference_index = $st->get_data_reference_index();
-    $_SIZE -= $st->get_size(); #subtract the sampletable extension size
     
     my ($pre_defined, $reserved, @pre_defined2, $width, $height, $horizresolution, $vertresolution, $reserved2, $frame_count, $compressorname, $depth, $pre_defined3);
     my ($spre_defined, $sreserved, $spre_defined2, $swidth, $sheight, $shorizresolution, $svertresolution, $sreserved2, $sframe_count, $scompressorname, $sdepth, $spre_defined3);
@@ -81,7 +81,6 @@ sub new ()
         my ($header) = Box->new($INF);
         $header->print($_INDENT_);
         $_SIZE -= $header->get_size();
-        
         switch($header->get_type()) {        
             case "esds" {
                 ESDS->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
@@ -103,7 +102,7 @@ sub new ()
             }
         }
     }
-    die "size ($_SIZE) is not zero. in VisualSampleEntry.\n" if $_SIZE;
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

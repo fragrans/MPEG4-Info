@@ -14,7 +14,7 @@ sub new ()
 
     seek($INF, $_SIZE, 1);
     &Def::header($_INDENT_, __PACKAGE__);
-    print $_INDENT_, "This is a box I cann't recognized.\n";
+    print $_INDENT_, "This is a NULL box I cann't recognized.\n";
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

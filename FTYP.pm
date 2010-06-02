@@ -23,18 +23,18 @@ sub new ()
     
     my ($brand, $sminor, $minor);
   
-    $_SIZE -= read( $INF, $brand, 4) or die "failed to read brand.\n";
-    $_SIZE -= read( $INF, $sminor, 4) or die "failed to read minor.\n";
+    $_SIZE -= &Def::read( $INF, $brand, 4);
+    $_SIZE -= &Def::read( $INF, $sminor, 4);
 
     $minor = unpack("N", $sminor);
     print $_INDENT_, "brand(" . $brand . ")\n";
     print $_INDENT_, "minor(" . $minor . ")\n";
 
     while ($_SIZE > 0) {
-        $_SIZE -= read( $INF, $brand, 4);
+        $_SIZE -= &Def::read( $INF, $brand, 4);
         print $_INDENT_, "brand(" . $brand. ")\n";
     }
-    die  "I still need to seek $_SIZE to find next token\n" if $_SIZE;
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-package STCO;
+package TSEL;
 use strict;
 use warnings;
 use Switch;
@@ -19,16 +19,15 @@ sub new ()
     $version = $fh->get_version();
     $flag = $fh->get_flag();
 
-    my ($sentry_count, $entry_count);
-    $_SIZE -= &Def::read($INF, $sentry_count, 4);
-    $entry_count = unpack("N", $sentry_count);
-    print $_INDENT_, "there are $entry_count entries.\n";
-    my ($i);
-    for ($i = 0; $i < $entry_count; $i++) {
-        my ($schunk_offset, $chunk_offset);
-        $_SIZE -= &Def::read($INF, $schunk_offset, 4);
-        $chunk_offset = unpack("N", $schunk_offset);
-  #      print $_INDENT_, "$i: ", $chunk_offset, "\n";
+    my ($sswitch_group,$attribute);
+    my ($switch_group);
+
+    $_SIZE -= &Def::read($INF, $sswitch_group);
+    print $_INDENT_, "switch_group: ", $switch_group, "\n";
+
+    while ($_SIZE > 0){
+        $_SIZE -= &Def::read($INF, $attribute, 4);
+        print $_INDENT_, "abbribute: ", $attribute, "\n";
     }
     die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);

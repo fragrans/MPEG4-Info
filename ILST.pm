@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-package PITM;
+package ILST;
 use strict;
 use warnings;
 use Switch;
@@ -12,6 +12,7 @@ sub new ()
     $_INDENT_ = $_[3];
     seek($INF, $_SIZE, 1);
     &Def::header($_INDENT_, __PACKAGE__);
+    print $_INDENT_, "I don't know this type. ;-(\n";
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

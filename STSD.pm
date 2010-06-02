@@ -11,9 +11,6 @@ use VisualSampleEntry;
 use AudioSampleEntry;
 use HintSampleEntry;
 use MetaDataSampleEntry;
-use MP4A;
-use MP4S;
-use MP4V;
 use AVC1;
 #
 # Sample Description Box
@@ -31,27 +28,24 @@ sub new ()
 
     # full box
     my $fh = FullBox->new($INF);
+    $_SIZE -= $fh->get_size();
     $fh->print($_INDENT_);
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();
-    $_SIZE -= 4; #subtract the fullheader extension size
     
     my ($sentry_count, $entry_count);
-    &Def::read($INF, $sentry_count, 4);
+    $_SIZE -= &Def::read($INF, $sentry_count, 4);
     $entry_count = unpack("N", $sentry_count);
     print $_INDENT_, "there are $entry_count entries.\n";
-    $_SIZE -= 4;
     
     my ($i);
     
     for ($i=0; $i<$entry_count; $i++) {
         my ($header) = Box->new($INF);
-        print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
         $_SIZE -= $header->get_size();
-        switch($header->get_type()) {
-
-           
+        $header->print($_INDENT_);
+        switch($header->get_type()) {           
             case "soun" {
                 AudioSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
@@ -60,32 +54,32 @@ sub new ()
             }
            
             case "avc1" {
-                AVC1->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                VisualSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER, $header->get_type());                
             }
             
-            case "mp4a" {
-                MP4A->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+            case "mp4a" 
+            {
+                #NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+                AudioSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER, $header->get_type());    
             }
             
             case "mp4v" {
-                MP4V->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                #NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+                VisualSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER, $header->get_type());    
             }
             case "mp4s" {
-                MP4S->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
-            }
-            case "hint" {
-                HintSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+                #NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
+                HintSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER, $header->get_type());    
             }
             case "meta" {
                 MetadataSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
-           
             else {
                 NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
             }
         }
     }
-    die "STSD size ($_SIZE) is not null. \n" if $_SIZE;
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

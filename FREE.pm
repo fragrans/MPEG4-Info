@@ -13,10 +13,14 @@ sub new ()
     $INF = $_[1];
     $_SIZE = $_[2];
     $_INDENT_ = $_[3];
-    
-    seek($INF, $_SIZE, 1);
-    
+        
     &Def::header($_INDENT_, __PACKAGE__);
+    my (@data, $sdata);
+    my $tmp = $_SIZE;
+    $_SIZE -= &Def::read($INF, $sdata, $_SIZE);
+    @data = unpack("C" x $tmp, $sdata);
+    #print $_INDENT_, "data[$tmp]: ", "@data", "\n";
+    print $_INDENT_, "not printed.\n";
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

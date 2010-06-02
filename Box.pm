@@ -21,17 +21,17 @@ sub new()
     my ($sum);
     $position = tell $INF;
     $sum = 0;
-    $sum += &Def::read ($INF, $ssize, 4);
-    $sum += &Def::read ($INF, $stype, 4);
+    $sum += &Def::read($INF, $ssize, 4);
+    $sum += &Def::read($INF, $stype, 4);
 
     $size = unpack("N", $ssize);
     # size is 64 bit?
     if ($size == 1) {
-        die "Box size is 1\n";
+        die "Box ($stype) size is 1, at $position\n";
         $sum += &Def::read($INF, $ssize, 8);
         $size = unpack("Q>", $ssize);
     } elsif ($size == 0) {
-        die "Box size is 0\n";
+        die "Box ($stype) size is 0 at $position\n";
     }
     
     if ($stype eq "uuid") {
@@ -49,7 +49,7 @@ sub new()
     return $hash;
 }
 sub print() {
-    print $_[1], "box type: ", $_[0]->{'type'}, " box size: ", $_[0]->{'size'}, " pos: ", $_[0]->{'position'}, "\n";
+    printf "%s%s%s%s%s%s0x%x%s", $_[1], "box type: ", $_[0]->{'type'}, " box size: ", $_[0]->{'size'}, " pos: ", $_[0]->{'position'}, "\n";
 }
 sub get_body_size() {
     return ($_[0]->{'size'} - $_[0]->{'header_size'});

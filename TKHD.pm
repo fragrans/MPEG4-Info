@@ -14,8 +14,8 @@ sub new ()
     my $DELIMITER = $Def::DELIMITER;
     
     my $fh = FullBox->new($INF);
+    $_SIZE -= $fh->get_size();
     $fh->print($_INDENT_);
-    $_SIZE -= 4; #subtract the fullheader extension size
     my ($version, $flag);
     $version = $fh->get_version();
     $flag = $fh->get_flag();
@@ -23,11 +23,11 @@ sub new ()
     my ($screation_time, $smodification_time, $strack_id, $sreserved, $sduration);
     
     if ($version == 1) {
-        &Def::read($INF, $screation_time, 8);
-        &Def::read($INF, $smodification_time, 8);
-        &Def::read($INF, $strack_id, 4);
-        &Def::read($INF, $sreserved, 4);
-        &Def::read($INF, $sduration, 8);
+        $_SIZE -= &Def::read($INF, $screation_time, 8);
+        $_SIZE -= &Def::read($INF, $smodification_time, 8);
+        $_SIZE -= &Def::read($INF, $strack_id, 4);
+        $_SIZE -= &Def::read($INF, $sreserved, 4);
+        $_SIZE -= &Def::read($INF, $sduration, 8);
         
         $creation_time = unpack("Q>", $screation_time);
         $modification_time = unpack("Q>", $smodification_time);
@@ -35,19 +35,17 @@ sub new ()
         $reserved = unpack("N", $sreserved);
         $duration = unpack("Q>", $sduration);
         
-        $_SIZE -= 32;
     } elsif ($version == 0) {
-        &Def::read($INF, $screation_time, 4);
-        &Def::read($INF, $smodification_time, 4);
-        &Def::read($INF, $strack_id, 4);
-        &Def::read($INF, $sreserved, 4);
-        &Def::read($INF, $sduration, 4);
+        $_SIZE -= &Def::read($INF, $screation_time, 4);
+        $_SIZE -= &Def::read($INF, $smodification_time, 4);
+        $_SIZE -= &Def::read($INF, $strack_id, 4);
+        $_SIZE -= &Def::read($INF, $sreserved, 4);
+        $_SIZE -= &Def::read($INF, $sduration, 4);
         $creation_time = unpack("N", $screation_time);
         $modification_time = unpack("N", $smodification_time);
         $track_id = unpack("N", $strack_id);
         $reserved = unpack("N", $sreserved);
         $duration = unpack("N", $sduration);
-        $_SIZE -= 20;
     } else {
         die "weild version found. \n";
     }
@@ -71,14 +69,14 @@ sub new ()
     my ($sreserved2, $slayer, $salternate_group, $svolume, $sreserved3, $smatrix, $swidth, $sheight);
     my (@reserved2, $layer, $alternate_group, $volume, $reserved3,@matrix, $width, $height);
 
-    &Def::read($INF, $sreserved2, 8);
-    &Def::read($INF, $slayer, 2);
-    &Def::read($INF, $salternate_group, 2);
-    &Def::read($INF, $svolume, 2);
-    &Def::read($INF, $sreserved3, 2);
-    &Def::read($INF, $smatrix, 36);
-    &Def::read($INF, $swidth, 4);
-    &Def::read($INF, $sheight, 4);
+    $_SIZE -= &Def::read($INF, $sreserved2, 8);
+    $_SIZE -= &Def::read($INF, $slayer, 2);
+    $_SIZE -= &Def::read($INF, $salternate_group, 2);
+    $_SIZE -= &Def::read($INF, $svolume, 2);
+    $_SIZE -= &Def::read($INF, $sreserved3, 2);
+    $_SIZE -= &Def::read($INF, $smatrix, 36);
+    $_SIZE -= &Def::read($INF, $swidth, 4);
+    $_SIZE -= &Def::read($INF, $sheight, 4);
     
     
     @reserved2 = unpack("NN", $sreserved2);
@@ -101,9 +99,8 @@ sub new ()
     print $_INDENT_,  "width: ". $width . "\n";
     print $_INDENT_,  "height: ". $height . "\n";
     
-    $_SIZE -= 60;
     
-    die "size is not zero.\n" if $_SIZE;
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 

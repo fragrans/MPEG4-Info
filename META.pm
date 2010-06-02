@@ -13,17 +13,29 @@ use IINF;
 use XML;
 use BXML;
 use PITM;
+use FREE;
+use ILST;
 
 sub new ()
 {
-    my $INF;
+    die "I prefer 3 parameters, but I only got $#_\n" if $#_ != 3;
+    my ($INF, $_SIZE, $_INDENT_);
     $INF = $_[1];
     $_SIZE = $_[2];
-
+    $_INDENT_ = $_[3];
+    &Def::header($_INDENT_, __PACKAGE__);
+    my $DELIMITER = $Def::DELIMITER;
+    my $fh = FullBox->new($INF);
+    $_SIZE -= $fh->get_size();
+    $fh->print($_INDENT_);
+    my ($version, $flag);
+    $version = $fh->get_version();
+    $flag = $fh->get_flag();
+    
     while ($_SIZE > 0) {
         my ($header) = Box->new($INF);
-        print $_INDENT_, "box type: ", $header->get_type(), " box size: ", $header->get_size(), "\n";
         $_SIZE -= $header->get_size();
+        $header->print($_INDENT_);
         switch($header->get_type()) {
             case "hdlr" {
                 HDLR->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
@@ -49,15 +61,21 @@ sub new ()
             case "bxml" {
                 BXML->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
+            case "ilst" {
+                ILST->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+            }
             case "pitm" {
                 PITM->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+            }
+            case "free" {
+                FREE->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
             else {
                 NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
         }
     }
-    seek($INF, $_SIZE, 1);
+    die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE; 
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 1;
