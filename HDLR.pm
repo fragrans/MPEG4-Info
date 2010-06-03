@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Switch;
 
+$HDLR::handler_type=undef;
 my $handler;
 #
 # handler, at this level, the media (handler) type
@@ -41,7 +42,7 @@ sub new ()
     print $_INDENT_, "handler type: ", $handler_type, "\n";
     print $_INDENT_, "reserved: @reserved", "\n";
     print $_INDENT_, "name: ", $name, "\n";
-
+    $HDLR::handler_type = $handler_type;
     die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
     
     &Def::footer($_INDENT_, __PACKAGE__);

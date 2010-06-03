@@ -49,7 +49,9 @@ sub new ()
             case "stbl" {
                 STBL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }
-            
+            case "hdlr" {
+                HDLR->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
+            }
             else {
                 NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);    
             }

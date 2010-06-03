@@ -11,7 +11,7 @@ use VisualSampleEntry;
 use AudioSampleEntry;
 use HintSampleEntry;
 use MetaDataSampleEntry;
-use AVC1;
+
 #
 # Sample Description Box
 #
@@ -38,6 +38,7 @@ sub new ()
     $_SIZE -= &Def::read($INF, $sentry_count, 4);
     $entry_count = unpack("N", $sentry_count);
     print $_INDENT_, "there are $entry_count entries.\n";
+    print $_INDENT_, "handler type: $HDLR::handler_type\n";
     
     my ($i);
     
@@ -55,20 +56,15 @@ sub new ()
            
             case "avc1" {
                 VisualSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER, $header->get_type());                
-            }
-            
+            }            
             case "mp4a" 
             {
-                #NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
                 AudioSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER, $header->get_type());    
             }
-            
             case "mp4v" {
-                #NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
                 VisualSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER, $header->get_type());    
             }
             case "mp4s" {
-                #NULL->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER);
                 HintSampleEntry->new($INF, $header->get_body_size(), $_INDENT_ . $DELIMITER, $header->get_type());    
             }
             case "meta" {
