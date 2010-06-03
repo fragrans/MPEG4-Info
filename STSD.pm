@@ -12,6 +12,8 @@ use AudioSampleEntry;
 use HintSampleEntry;
 use MetaDataSampleEntry;
 
+@ISA = ("Box");
+
 #
 # Sample Description Box
 #
@@ -23,7 +25,7 @@ sub new ()
     $_SIZE = $_[2];
     $_INDENT_ = $_[3];
 
-    &Def::header($_INDENT_, __PACKAGE__);
+ 
     my $DELIMITER = $Def::DELIMITER;
 
     # full box
@@ -37,9 +39,12 @@ sub new ()
     my ($sentry_count, $entry_count);
     $_SIZE -= &Def::read($INF, $sentry_count, 4);
     $entry_count = unpack("N", $sentry_count);
-    print $_INDENT_, "there are $entry_count entries.\n";
-    print $_INDENT_, "handler type: $HDLR::handler_type\n";
-    
+    my $hash = {}; # hash reference
+    my @params;
+    my @subs;
+    $hash->{'params'} = @params;
+    $hash->{'subs'} = @subs;
+
     my ($i);
     
     for ($i=0; $i<$entry_count; $i++) {
@@ -76,6 +81,12 @@ sub new ()
         }
     }
     die __PACKAGE__ . ": Size ($_SIZE) is not zero.\n" if $_SIZE;
+
+}
+
+sub print() {
+    &Def::header($_INDENT_, __PACKAGE__);
+    print $_INDENT_, "there are ", $_[0]->{'entry_count'}, " entries.\n";
     &Def::footer($_INDENT_, __PACKAGE__);
 }
 
