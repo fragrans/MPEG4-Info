@@ -7,7 +7,7 @@ use Container;
 
 $|++;
 
-print "MPEG4 information extractor by Li. Tuvok\n";
+print "# MPEG4 information extractor by Li. Tuvok #\n";
 my $file = "640-480.wmv.MP4";
 
 if (($#ARGV+1) == 1) {
